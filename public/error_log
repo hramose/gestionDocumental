@@ -1,0 +1,32 @@
+[09-Feb-2016 14:49:44 UTC] PHP Fatal error:  Call to a member function delete() on a non-object in /home/wcadena/gestorhtml/app/Http/Controllers/Tb_departamentoController.php on line 114
+[09-Feb-2016 17:38:09 UTC] PHP Fatal error:  Call to a member function delete() on a non-object in /home/wcadena/gestorhtml/app/Http/Controllers/Tb_departamentoController.php on line 114
+[09-Feb-2016 17:38:14 UTC] PHP Fatal error:  Call to a member function delete() on a non-object in /home/wcadena/gestorhtml/app/Http/Controllers/Tb_departamentoController.php on line 114
+[09-Feb-2016 17:38:37 UTC] PHP Fatal error:  Call to a member function delete() on a non-object in /home/wcadena/gestorhtml/app/Http/Controllers/Tb_departamentoController.php on line 114
+[13-Mar-2017 01:14:06 UTC] PHP Fatal error:  Uncaught exception 'ReflectionException' with message 'Class Soportem\Http\Kernel does not exist' in /home/wcadena/gestorhtml/vendor/laravel/framework/src/Illuminate/Container/Container.php:736
+Stack trace:
+#0 /home/wcadena/gestorhtml/vendor/laravel/framework/src/Illuminate/Container/Container.php(736): ReflectionClass->__construct('Soportem\\Http\\K...')
+#1 /home/wcadena/gestorhtml/vendor/laravel/framework/src/Illuminate/Container/Container.php(626): Illuminate\Container\Container->build('Soportem\\Http\\K...', Array)
+#2 /home/wcadena/gestorhtml/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(674): Illuminate\Container\Container->make('Soportem\\Http\\K...', Array)
+#3 /home/wcadena/gestorhtml/vendor/laravel/framework/src/Illuminate/Container/Container.php(216): Illuminate\Foundation\Application->make('Soportem\\Http\\K...', Array)
+#4 /home/wcadena/gestorhtml/vendor/laravel/framework/src/Illuminate/Container/Container.php(733): Illuminate\Container\Container->Illuminate\Container\{closure}( in /home/wcadena/gestorhtml/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 736
+[13-Mar-2017 01:28:57 UTC] PHP Fatal error:  Uncaught exception 'ReflectionException' with message 'Class Soportem\Http\Kernel does not exist' in /home/wcadena/gestorhtml/vendor/laravel/framework/src/Illuminate/Container/Container.php:736
+Stack trace:
+#0 /home/wcadena/gestorhtml/vendor/laravel/framework/src/Illuminate/Container/Container.php(736): ReflectionClass->__construct('Soportem\\Http\\K...')
+#1 /home/wcadena/gestorhtml/vendor/laravel/framework/src/Illuminate/Container/Container.php(626): Illuminate\Container\Container->build('Soportem\\Http\\K...', Array)
+#2 /home/wcadena/gestorhtml/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(674): Illuminate\Container\Container->make('Soportem\\Http\\K...', Array)
+#3 /home/wcadena/gestorhtml/vendor/laravel/framework/src/Illuminate/Container/Container.php(216): Illuminate\Foundation\Application->make('Soportem\\Http\\K...', Array)
+#4 /home/wcadena/gestorhtml/vendor/laravel/framework/src/Illuminate/Container/Container.php(733): Illuminate\Container\Container->Illuminate\Container\{closure}( in /home/wcadena/gestorhtml/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 736
+[13-Mar-2017 01:35:24 UTC] PHP Fatal error:  Uncaught exception 'ReflectionException' with message 'Class Soportem\Http\Kernel does not exist' in /home/wcadena/gestorhtml/vendor/laravel/framework/src/Illuminate/Container/Container.php:736
+Stack trace:
+#0 /home/wcadena/gestorhtml/vendor/laravel/framework/src/Illuminate/Container/Container.php(736): ReflectionClass->__construct('Soportem\\Http\\K...')
+#1 /home/wcadena/gestorhtml/vendor/laravel/framework/src/Illuminate/Container/Container.php(626): Illuminate\Container\Container->build('Soportem\\Http\\K...', Array)
+#2 /home/wcadena/gestorhtml/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(674): Illuminate\Container\Container->make('Soportem\\Http\\K...', Array)
+#3 /home/wcadena/gestorhtml/vendor/laravel/framework/src/Illuminate/Container/Container.php(216): Illuminate\Foundation\Application->make('Soportem\\Http\\K...', Array)
+#4 /home/wcadena/gestorhtml/vendor/laravel/framework/src/Illuminate/Container/Container.php(733): Illuminate\Container\Container->Illuminate\Container\{closure}( in /home/wcadena/gestorhtml/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 736
+[13-Mar-2017 01:43:47 UTC] PHP Fatal error:  Uncaught exception 'ReflectionException' with message 'Class Soportem\Http\Kernel does not exist' in /home/wcadena/gestorhtml/vendor/laravel/framework/src/Illuminate/Container/Container.php:736
+Stack trace:
+#0 /home/wcadena/gestorhtml/vendor/laravel/framework/src/Illuminate/Container/Container.php(736): ReflectionClass->__construct('Soportem\\Http\\K...')
+#1 /home/wcadena/gestorhtml/vendor/laravel/framework/src/Illuminate/Container/Container.php(626): Illuminate\Container\Container->build('Soportem\\Http\\K...', Array)
+#2 /home/wcadena/gestorhtml/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(674): Illuminate\Container\Container->make('Soportem\\Http\\K...', Array)
+#3 /home/wcadena/gestorhtml/vendor/laravel/framework/src/Illuminate/Container/Container.php(216): Illuminate\Foundation\Application->make('Soportem\\Http\\K...', Array)
+#4 /home/wcadena/gestorhtml/vendor/laravel/framework/src/Illuminate/Container/Container.php(733): Illuminate\Container\Container->Illuminate\Container\{closure}( in /home/wcadena/gestorhtml/vendor/laravel/framework/src/Illuminate/Container/Container.php on line 736

@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: Soportem
+        psr4_prefix: Soportem
+        src_path: app

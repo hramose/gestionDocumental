@@ -1,0 +1,14 @@
+<?php
+
+namespace Soportem\Helper\HTML;
+
+class Template {
+
+    public static function render($file, array $data = array()) {
+        ob_start();
+        extract($data);
+        include '../template/' . $file . '.php';
+        return ob_get_clean();
+    }
+
+}
