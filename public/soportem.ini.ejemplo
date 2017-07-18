@@ -1,0 +1,20 @@
+; Archivo de configuracion
+;25/03/2015 Wagner Cadena wcadena@outloook.com
+[DataBase]
+hostname_cyber = "localhost"
+database_cyber = "localhost"
+username_cyber = "localhost"
+password_cyber = "localhost"
+[site]
+site="Sistema de Documentacion Conagopare"
+name_site="Sistema de Documentacion"
+[correo]
+Host="mailtrap.io"
+Port=465
+Username = "localhost"
+Password = "localhost"
+AddReplyTo_mail="localhost@localhost.com"
+AddReplyTo_name="Soporte Ecuatask"
+From="soporte.localhost@localhost.com"
+FromName = "Secretaria General Conagopare Pichincha"
+
