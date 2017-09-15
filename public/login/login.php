@@ -54,7 +54,7 @@ if (isset($_POST['usuario'])) {
     $MM_redirectLoginSuccess = "../index.php";
     $MM_redirectLoginFailed = "../error.php?mensaje=Usuario o Clave incorrecta";
     $MM_redirecttoReferrer = false;
-    mysql_select_db($database_cyber, $cyber);
+
 
     $LoginRS__query = sprintf("  SELECT tb_usuarios.id_usuarios  as user_id,
        tb_usuarios.usuario,
@@ -72,19 +72,33 @@ if (isset($_POST['usuario'])) {
        tb_usuarios.user_nivel
   FROM  tb_usuarios tb_usuarios WHERE usuario=%s AND clave=%s", GetSQLValueString($loginUsername, "text"), GetSQLValueString($password, "text"));
 
-    $LoginRS = mysql_query($LoginRS__query, $cyber) or die(mysql_error());
-    $loginFoundUser = mysql_num_rows($LoginRS);
-    if ($loginFoundUser) {
-
-        $loginStrGroup = mysql_result($LoginRS, 0, 'user_nivel');
-        $loginStrId = mysql_result($LoginRS, 0, 'user_id');
-        $loginNombre_Usuario = mysql_result($LoginRS, 0, 'user_usuario');
+    $LoginRS = conectarseU($LoginRS__query);
+    $loginFoundUser = count($LoginRS);
+    if($loginFoundUser>0){
+        $loginStrId = $LoginRS['user_id'];
+        $loginNombre_Usuario = $LoginRS['user_usuario'];
+        $loginStrGroup  =   $LoginRS['user_nivel'];
 
         if (PHP_VERSION >= 5.1) {
             session_regenerate_id(true);
         } else {
             session_regenerate_id();
         }
+        $_SESSION['MM_Username'] = $loginUsername;
+        $_SESSION['MM_IDUsername'] = $loginStrId;
+        $_SESSION['MM_UserGroup'] = $loginStrGroup;
+        $_SESSION['MM_UserNameCompleto'] = $loginNombre_Usuario;
+        $_SESSION['permiso'] = get_permisos_inicio_secion($loginStrId, $database_cyber, $cyber);
+
+        if (isset($_SESSION['PrevUrl']) && false) {
+            $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];
+        }
+        header("Location: " . $MM_redirectLoginSuccess);
+    }
+    /*if ($loginFoundUser==0){
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    = mysql_result($LoginRS, 0, 'user_nivel');
+
         //declare two session variables and assign them
         /* echo $loginUsername;
           echo $loginStrId;
@@ -92,21 +106,13 @@ if (isset($_POST['usuario'])) {
           echo "<pre>";
           //	echo md5('HelloWorld');
           echo $LoginRS__query;
-          echo "</pre>"; */
-        $_SESSION['MM_Username'] = $loginUsername;
-        $_SESSION['MM_IDUsername'] = $loginStrId;
-        $_SESSION['MM_UserGroup'] = $loginStrGroup;
-        $_SESSION['MM_UserNameCompleto'] = $loginNombre_Usuario;
+          echo "</pre>"; * /
 
-        $_SESSION['permiso'] = get_permisos_inicio_secion($loginStrId, $database_cyber, $cyber);
 
-        if (isset($_SESSION['PrevUrl']) && false) {
-            $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];
-        }
-        header("Location: " . $MM_redirectLoginSuccess);
+
     } else {
         header("Location: " . $MM_redirectLoginFailed);
-    }
+    }*/
 }
 ?>
 <!DOCTYPE html>

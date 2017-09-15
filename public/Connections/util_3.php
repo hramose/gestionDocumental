@@ -32,6 +32,7 @@ if (!function_exists("GetSQLValueString")) {
 
 }
 
+
 function get_permisos($select_name, $Id_Usuario, $database_cyber, $cyber) {
     mysql_select_db($database_cyber, $cyber);
     $query_rs_usuarios = " SELECT (select /*top*/ 1 id_usuarios from tb_permisos where id_usuarios ='" . $Id_Usuario . "' and Id_Permiso=Permisos.Id_permisos_generales limit 1) ,
@@ -112,18 +113,18 @@ tb_departamento.id_departamneto,
 }
 
 function get_permisos_inicio_secion($Id_Usuario, $database_cyber, $cyber) {
-    mysql_select_db($database_cyber, $cyber);
+
     $query_rs_usuarios = " select id_permiso from tb_permisos where id_usuarios ='" . $Id_Usuario . "'; ";
     //echo "<pre>$query_rs_usuarios</pre>";
-    $rs_usuarios = mysql_query($query_rs_usuarios, $cyber) or die(mysql_error());
-    $row_rs_usuarios = mysql_fetch_assoc($rs_usuarios);
-    $totalRows_rs_usuarios = mysql_num_rows($rs_usuarios);
+    $rs_usuarios = conectarseT($query_rs_usuarios);
+    //$row_rs_usuarios = $rs_usuarios->fetchAll();
+
     $permiso = array();
     unset($permiso);
-    do {
+    foreach ($rs_usuarios as $row_rs_usuarios ){
         $permiso[] = $row_rs_usuarios['id_permiso'];
-    } while ($row_rs_usuarios = mysql_fetch_assoc($rs_usuarios));
-    mysql_free_result($rs_usuarios);
+    }
+    //dd($permiso);
     return $permiso;
 }
 
