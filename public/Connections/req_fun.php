@@ -12,25 +12,22 @@ class Req_Controller {
     }
 
     function get_usuarios_telefono_select($select_name) {
-        mysql_select_db($this->database_cyber, $this->cyber);
+        //cambiado por pod
         $query_rs_usuarios = "SELECT tb_usuarios.usuario,
        tb_usuarios.id_usuarios,
        tb_usuarios.estado
   FROM  tb_usuarios tb_usuarios
  WHERE (tb_usuarios.user_nivel > 0) ; ";
-        //echo $query_rs_usuarios;
-        $rs_usuarios = mysql_query($query_rs_usuarios, $this->cyber) or die(mysql_error());
-        $row_rs_usuarios = mysql_fetch_assoc($rs_usuarios);
-        $totalRows_rs_usuarios = mysql_num_rows($rs_usuarios);
+
+        $row_rs_usuarios = conT($query_rs_usuarios);
         ?>
         <select id="<?php echo $select_name ?>" name="<?php echo $select_name ?>" class="form-control" >
             <option value="---"><?=$this->trans("req_fun.selecciones")?></option>
-            <?php do { ?>
+            <?php foreach ($row_rs_usuarios as $row_rs_usuarios ) { ?>
                 <option value="<?php echo $row_rs_usuarios['id_usuarios']; ?>"><?php echo $row_rs_usuarios['usuario']; ?></option>
-            <?php } while ($row_rs_usuarios = mysql_fetch_assoc($rs_usuarios)); ?>
+            <?php } ; ?>
         </select>
         <?php
-        mysql_free_result($rs_usuarios);
     }
 
     function getSolucion_valida($id_peticion) {
@@ -39,12 +36,10 @@ class Req_Controller {
 FROM  tb_solucion_pedido tb_solucion_pedido WHERE (tb_solucion_pedido.id_peticion = %s)', $this->GetSQLValueString($id_peticion, "text")
         );
         //echo $deleteSQL;
-        mysql_select_db($this->database_cyber, $this->cyber);
-        $rs_usuarios = mysql_query($deleteSQL, $this->cyber) or die(mysql_error());
-        $row_rs_usuarios = mysql_fetch_assoc($rs_usuarios);
-        $totalRows_rs_usuarios = mysql_num_rows($rs_usuarios);
+        //cambiado por pod
+        // $rs_usuarios = mysql_query($deleteSQL, $this->cyber) or die(mysql_error());   //cambiado por pod
+        $row_rs_usuarios = conectarseU($deleteSQL);
         $dato = $row_rs_usuarios;
-        mysql_free_result($rs_usuarios);
         return $dato;
     }
 
@@ -52,12 +47,10 @@ FROM  tb_solucion_pedido tb_solucion_pedido WHERE (tb_solucion_pedido.id_peticio
         $dato = NULL;
         $deleteSQL = sprintf("select tb_pedido_usuarios.id_pedido_usuarios from tb_pedido_usuarios where id_peticion =%s  and id_usuarios =%s and estado =%s ;", $this->GetSQLValueString($id_peticion, "int"), $this->GetSQLValueString($id_usuarios, "int"), $this->GetSQLValueString('PROCE', "text"));
         //echo $deleteSQL;
-        mysql_select_db($this->database_cyber, $this->cyber);
-        $rs_usuarios = mysql_query($deleteSQL, $this->cyber) or die(mysql_error());
-        $row_rs_usuarios = mysql_fetch_assoc($rs_usuarios);
-        $totalRows_rs_usuarios = mysql_num_rows($rs_usuarios);
+        //cambiado por pod
+        // $rs_usuarios = mysql_query($deleteSQL, $this->cyber) or die(mysql_error());   //cambiado por pod
+        $row_rs_usuarios = conectarseU($deleteSQL);
         $dato = $row_rs_usuarios;
-        mysql_free_result($rs_usuarios);
         return $dato;
     }
 
@@ -67,12 +60,12 @@ FROM  tb_solucion_pedido tb_solucion_pedido WHERE (tb_solucion_pedido.id_peticio
         $dato = NULL;
         $deleteSQL = sprintf("select count(*) as existee from tb_pedido_usuarios where id_peticion =%s  and id_usuarios =%s and estado =%s ;", $this->GetSQLValueString($id_peticion, "int"), $this->GetSQLValueString($id_usuarios, "int"), $this->GetSQLValueString($estado, "text"));
         // echo $deleteSQL;
-        mysql_select_db($this->database_cyber, $this->cyber);
-        $rs_usuarios = mysql_query($deleteSQL, $this->cyber) or die(mysql_error());
-        $row_rs_usuarios = mysql_fetch_assoc($rs_usuarios);
-        $totalRows_rs_usuarios = mysql_num_rows($rs_usuarios);
+        //cambiado por pod
+        // $rs_usuarios = mysql_query($deleteSQL, $this->cyber) or die(mysql_error());   //cambiado por pod
+        $row_rs_usuarios = conectarseU($deleteSQL);
+
         $dato = $row_rs_usuarios;
-        mysql_free_result($rs_usuarios);
+
         return $dato;
     }
 
@@ -80,7 +73,7 @@ FROM  tb_solucion_pedido tb_solucion_pedido WHERE (tb_solucion_pedido.id_peticio
 
 
     function darUsuarioSdeReq_busqueda($id_peticion, $tipo) {
-        mysql_select_db($this->database_cyber, $this->cyber);
+        //cambiado por pod
         $query_rs_usuarios = sprintf("SELECT tb_pedido_usuarios.id_pedido_usuarios,
                   tb_pedido_usuarios.id_peticion,
                   tb_pedido_usuarios.id_usuarios,
@@ -103,19 +96,17 @@ FROM  tb_solucion_pedido tb_solucion_pedido WHERE (tb_solucion_pedido.id_peticio
                   tb_usuarios.nombre,
                   tb_usuarios.apellido ;", $this->GetSQLValueString($id_peticion, "int"), $this->GetSQLValueString($tipo, "text"));
         //echo $query_rs_usuarios;
-        $rs_usuarios = mysql_query($query_rs_usuarios, $this->cyber) or die(mysql_error());
-        $row_rs_usuarios = mysql_fetch_assoc($rs_usuarios);
-        $totalRows_rs_usuarios = mysql_num_rows($rs_usuarios);
+        $row_rs_usuarios = conT($query_rs_usuarios);
         ?>
         <ul>
 
-            <?php do { ?>
+            <?php foreach ($row_rs_usuarios as $row_rs_usuarios ) { ?>
                 <li title="<?php echo $row_rs_usuarios["nombre"]; ?> <?php echo $row_rs_usuarios["apellido"]; ?> <?=$this->trans("req_fun.como")?>: <?php echo $row_rs_usuarios["tipo"]; ?> "><?php echo $row_rs_usuarios["usuario"]; ?></li>
-            <?php } while ($row_rs_usuarios = mysql_fetch_assoc($rs_usuarios)); ?>
+            <?php } ; ?>
         </ul>
 
         <?php
-        mysql_free_result($rs_usuarios);
+
     }
 
     function darUsuarioSolicdeReq($id_peticion, $tipo = 'SOLIC') {
@@ -136,12 +127,12 @@ FROM  tb_solucion_pedido tb_solucion_pedido WHERE (tb_solucion_pedido.id_peticio
                   INNER JOIN  tb_usuarios tb_usuarios
                   ON (tb_pedido_usuarios.id_usuarios = tb_usuarios.id_usuarios)
              WHERE tb_pedido_usuarios.id_peticion = %s and tb_pedido_usuarios.tipo= %s ;", $this->GetSQLValueString($id_peticion, "int"), $this->GetSQLValueString($tipo, "text"));
-        mysql_select_db($this->database_cyber, $this->cyber);
-        $rs_usuarios = mysql_query($deleteSQL, $this->cyber) or die(mysql_error());
-        $row_rs_usuarios = mysql_fetch_assoc($rs_usuarios);
-        $totalRows_rs_usuarios = mysql_num_rows($rs_usuarios);
+        //cambiado por pod
+        // $rs_usuarios = mysql_query($deleteSQL, $this->cyber) or die(mysql_error());   //cambiado por pod
+        $row_rs_usuarios = conectarseT($deleteSQL);
+
         $dato = $row_rs_usuarios;
-        mysql_free_result($rs_usuarios);
+
         return $dato;
     }
 
@@ -176,17 +167,17 @@ FROM  tb_solucion_pedido tb_solucion_pedido WHERE (tb_solucion_pedido.id_peticio
                   ON (tb_pedido_usuarios.id_usuarios = tb_usuarios.id_usuarios)
              WHERE tb_usuarios.user_nivel > 0 and  tb_pedido_usuarios.id_peticion= %s ;", $this->GetSQLValueString($id_peticion, "int"));
         // echo $deleteSQL;
-        mysql_select_db($this->database_cyber, $this->cyber);
-        $rs_usuarios = mysql_query($deleteSQL, $this->cyber) or die(mysql_error());
-        $row_rs_usuarios = mysql_fetch_assoc($rs_usuarios);
-        $totalRows_rs_usuarios = mysql_num_rows($rs_usuarios);
+        //cambiado por pod
+        // $rs_usuarios = mysql_query($deleteSQL, $this->cyber) or die(mysql_error());   //cambiado por pod
+        $row_rs_usuarios = conectarseU($deleteSQL);
+
         $dato = $row_rs_usuarios;
-        mysql_free_result($rs_usuarios);
+
         return $dato;
     }
 
     function darUsuarioSdeReq($id_peticion, $tipo) {
-        mysql_select_db($this->database_cyber, $this->cyber);
+        //cambiado por pod
         $query_rs_usuarios = sprintf("SELECT tb_pedido_usuarios.id_pedido_usuarios,
                   tb_pedido_usuarios.id_peticion,
                   tb_pedido_usuarios.id_usuarios,
@@ -204,9 +195,7 @@ FROM  tb_solucion_pedido tb_solucion_pedido WHERE (tb_solucion_pedido.id_peticio
                   ON (tb_pedido_usuarios.id_usuarios = tb_usuarios.id_usuarios)
              WHERE tb_pedido_usuarios.id_peticion = %s and tb_pedido_usuarios.tipo like %s ;", $this->GetSQLValueString($id_peticion, "int"), $this->GetSQLValueString($tipo, "text"));
         //echo $query_rs_usuarios;
-        $rs_usuarios = mysql_query($query_rs_usuarios, $this->cyber) or die(mysql_error());
-        $row_rs_usuarios = mysql_fetch_assoc($rs_usuarios);
-        $totalRows_rs_usuarios = mysql_num_rows($rs_usuarios);
+        $row_rs_usuarios = conT($query_rs_usuarios);
         ?>
 
         <table id="darUsuarioSdeReq-xc23de" class="table-striped table-bordered">
@@ -219,9 +208,9 @@ FROM  tb_solucion_pedido tb_solucion_pedido WHERE (tb_solucion_pedido.id_peticio
                 <th><?=$this->trans("req_fun.descripcion")?></th>
                 <th><?=$this->trans("req_fun.accion")?></th>
             </tr>
-             </thead>
-  <tbody>
-            <?php do { ?>
+            </thead>
+            <tbody>
+            <?php foreach ($row_rs_usuarios as $row_rs_usuarios ) {?>
                 <tr>
                     <td  title="<?php echo $row_rs_usuarios["nombre"]; ?> <?php echo $row_rs_usuarios["apellido"]; ?> "><?php echo $row_rs_usuarios["usuario"]; ?></td>
                     <td><?php echo $row_rs_usuarios["fecha_ini"]; ?></td>
@@ -232,12 +221,12 @@ FROM  tb_solucion_pedido tb_solucion_pedido WHERE (tb_solucion_pedido.id_peticio
                         </a>
                     </td>
                 </tr>
-            <?php } while ($row_rs_usuarios = mysql_fetch_assoc($rs_usuarios)); ?>
+            <?php } ?>
             </tbody>
         </table>
 
         <?php
-        mysql_free_result($rs_usuarios);
+
     }
 
     function editRequerimiento($estado, $asignado, $id_peticion) {
@@ -248,8 +237,8 @@ FROM  tb_solucion_pedido tb_solucion_pedido WHERE (tb_solucion_pedido.id_peticio
 WHERE id_peticion = %s", $this->GetSQLValueString($estado, "text"), $this->GetSQLValueString($asignado, "text"), $this->GetSQLValueString($id_peticion, "int")
         );
 //	echo $deleteSQL;
-        mysql_select_db($this->database_cyber, $this->cyber);
-        $rs_usuarios = mysql_query($deleteSQL, $this->cyber) or die(mysql_error());
+        //cambiado por pod
+         $rs_usuarios = insertT($deleteSQL);
 
         if ($rs_usuarios) {
             echo '<div class="ui-widget">
@@ -278,8 +267,8 @@ WHERE id_peticion = %s", $this->GetSQLValueString($estado, "text"), $this->GetSQ
 WHERE id_peticion = %s", $this->GetSQLValueString($id_usuarios, "int"), $this->GetSQLValueString($resolucion, "text"), $this->GetSQLValueString($solucion, "text"), $this->GetSQLValueString($id_peticion, "int")
         );
 //	echo $deleteSQL;
-        mysql_select_db($this->database_cyber, $this->cyber);
-        $rs_usuarios = mysql_query($deleteSQL, $this->cyber) or die(mysql_error());
+        //cambiado por pod
+         $rs_usuarios = insertT($deleteSQL);
 
         if ($rs_usuarios) {
             echo '<div class="ui-widget">
@@ -310,12 +299,12 @@ WHERE id_peticion = %s", $this->GetSQLValueString($id_usuarios, "int"), $this->G
   FROM  tb_solucion_pedido tb_solucion_pedido
 WHERE (tb_solucion_pedido.id_peticion = %s)', $this->GetSQLValueString($id_peticion, "text")
         );
-        mysql_select_db($this->database_cyber, $this->cyber);
-        $rs_usuarios = mysql_query($deleteSQL, $this->cyber) or die(mysql_error());
-        $row_rs_usuarios = mysql_fetch_assoc($rs_usuarios);
-        $totalRows_rs_usuarios = mysql_num_rows($rs_usuarios);
+        //cambiado por pod
+        // $rs_usuarios = mysql_query($deleteSQL, $this->cyber) or die(mysql_error());   //cambiado por pod
+        $row_rs_usuarios = conectarseU($deleteSQL);
+
         $dato = $row_rs_usuarios;
-        mysql_free_result($rs_usuarios);
+
         return $dato;
     }
 
@@ -336,8 +325,8 @@ WHERE (tb_solucion_pedido.id_peticion = %s)', $this->GetSQLValueString($id_petic
         );
 
         //echo $deleteSQL;
-        mysql_select_db($this->database_cyber, $this->cyber);
-        $rs_usuarios = mysql_query($deleteSQL, $this->cyber) or die(mysql_error());
+        //cambiado por pod
+        $rs_usuarios = insertT($deleteSQL);
         $datodswe45 = -1;
         if ($rs_usuarios) {
             $datodswe45 = $this->darIdPeticion();
@@ -390,12 +379,12 @@ WHERE (tb_solucion_pedido.id_peticion = %s)', $this->GetSQLValueString($id_petic
   FROM  pedidos pedidos
 WHERE (pedidos.id_peticion = %s)', $this->GetSQLValueString($id_peticion, "text")
         );
-        mysql_select_db($this->database_cyber, $this->cyber);
-        $rs_usuarios = mysql_query($deleteSQL, $this->cyber) or die(mysql_error());
-        $row_rs_usuarios = mysql_fetch_assoc($rs_usuarios);
-        $totalRows_rs_usuarios = mysql_num_rows($rs_usuarios);
+        //cambiado por pod
+        // $rs_usuarios = mysql_query($deleteSQL, $this->cyber) or die(mysql_error());   //cambiado por pod
+        $row_rs_usuarios = conectarseU($deleteSQL);
+
         $dato = $row_rs_usuarios;
-        mysql_free_result($rs_usuarios);
+
         return $dato;
     }
 
@@ -406,8 +395,8 @@ WHERE (pedidos.id_peticion = %s)', $this->GetSQLValueString($id_peticion, "text"
 WHERE id_peticion = %s and tipo = 'TECNI' and id_usuarios = %s;", $this->GetSQLValueString($estado, "text"), $this->GetSQLValueString($id_peticion, "int"), $this->GetSQLValueString($id_usuarios, "int"));
 
         //echo $deleteSQL;
-        mysql_select_db($this->database_cyber, $this->cyber);
-        $rs_usuarios = mysql_query($deleteSQL, $this->cyber) or die(mysql_error());
+        //cambiado por pod
+        $rs_usuarios = insertT($deleteSQL);
         $datodswe45 = -1;
         if ($rs_usuarios) {
             $datodswe45 = $this->darIdPeticion();
@@ -442,8 +431,8 @@ WHERE id_peticion = %s and tipo = 'TECNI' and id_usuarios = %s;", $this->GetSQLV
         );
 
         //echo $deleteSQL;
-        mysql_select_db($this->database_cyber, $this->cyber);
-        $rs_usuarios = mysql_query($deleteSQL, $this->cyber) or die(mysql_error());
+        //cambiado por pod
+        $rs_usuarios = insertT($deleteSQL);
         $datodswe45 = -1;
         if ($rs_usuarios) {
             $datodswe45 = $this->darIdPeticion();
@@ -461,7 +450,7 @@ WHERE id_peticion = %s and tipo = 'TECNI' and id_usuarios = %s;", $this->GetSQLV
             "responsables" => null
         );
         ////////////////////////////////////////////////////////////////////////////////
-        mysql_select_db($this->database_cyber, $this->cyber);
+        //cambiado por pod
         $query_rs_usuarios = sprintf("SELECT tb_usuarios.id_usuarios,
 tb_usuarios.nombre,
                   tb_usuarios.apellido,
@@ -475,10 +464,10 @@ tb_usuarios.nombre,
                          tb_usuarios.id_usuarios)
              WHERE tb_usuarios.user_nivel > 0 and id_departamneto = %s;", $this->GetSQLValueString($id_departamneto, "text"));
         //echo $query_rs_usuarios;
-        $rs_usuarios = mysql_query($query_rs_usuarios, $this->cyber) or die(mysql_error());
-        $row_rs_usuarios = mysql_fetch_assoc($rs_usuarios);
-        $totalRows_rs_usuarios = mysql_num_rows($rs_usuarios);
-        do {
+
+        $row_rs_usuarios = conectarseT($query_rs_usuarios);
+
+        foreach ($row_rs_usuarios as $rs_usuarios ) {
             $array["responsables"][] = array(
                 "id_usuarios" => $row_rs_usuarios["id_usuarios"],
                 "nombre" => $row_rs_usuarios["nombre"],
@@ -486,8 +475,8 @@ tb_usuarios.nombre,
                 "correo_corporativo" => $row_rs_usuarios["correo_corporativo"],
                 "usuario" => $row_rs_usuarios["usuario"]
             );
-        } while ($row_rs_usuarios = mysql_fetch_assoc($rs_usuarios));
-        mysql_free_result($rs_usuarios);
+        }
+
         /////////////////////////////////////////////////////////////////////////////////
         return $array;
     }
@@ -530,43 +519,43 @@ WHERE (pedidos.id_peticion = %s)', $this->GetSQLValueString($id_peticion, "text"
         );
         //$deleteSQL = sprintf('SELECT pedidos.id_peticion,                   pedidos.nombre,                   pedidos.cantidad,                   pedidos.estacion,                   pedidos.tipo,                   pedidos.problema,                   pedidos.cod_empleado_soporte,                   pedidos.estado,                   pedidos.fecha_pedido,                   pedidos.fecha_solucion,                   pedidos.asignado,                   pedidos.solucion,                   pedidos.mail_req,                   pedidos.fecha_asignacion,                   pedidos.area,                   pedidos.Reasignado,                   pedidos.fecha_reasignacion,                   pedidos.motivo_reasignacion,                   pedidos.Prioridad,                   pedidos.extencion,                   pedidos.celular,                   pedidos.ip_1,                   pedidos.ip_2,                   pedidos.id_departamento,                   pedidos.titulo,                   tb_estaciones.estacion esta_ciudad,                   tb_departamento.descripcion depart_ciudad              FROM ( tb_departamento tb_departamento                    INNER JOIN  tb_estaciones tb_estaciones                    ON (tb_departamento.id_estacion = tb_estaciones.id_estacion))                   INNER JOIN  pedidos pedidos                   ON (pedidos.id_departamento = tb_departamento.id_departamneto) WHERE (pedidos.id_peticion = %s)', $this->GetSQLValueString($id_peticion, "text")        );
         // echo $deleteSQL;
-        mysql_select_db($this->database_cyber, $this->cyber);
-        $rs_usuarios = mysql_query($deleteSQL, $this->cyber) or die(mysql_error());
-        $row_rs_usuarios = mysql_fetch_assoc($rs_usuarios);
-        $totalRows_rs_usuarios = mysql_num_rows($rs_usuarios);
+        //cambiado por pod
+        // $rs_usuarios = mysql_query($deleteSQL, $this->cyber) or die(mysql_error());   //cambiado por pod
+        $row_rs_usuarios = conectarseU($deleteSQL);
+
         $dato = $row_rs_usuarios;
-        mysql_free_result($rs_usuarios);
+
         return $dato;
     }
 
     /**
-      da el numero de tecnicos con estado PROCE
+    da el numero de tecnicos con estado PROCE
      * */
     function dartecnico_asuntado($id_peticion) {
-        mysql_select_db($this->database_cyber, $this->cyber);
+        //cambiado por pod
         $query_rs_usuarios = sprintf("SELECT tb_usuarios.usuario
              FROM  tb_pedido_usuarios tb_pedido_usuarios
                   INNER JOIN  tb_usuarios tb_usuarios
                   ON (tb_pedido_usuarios.id_usuarios = tb_usuarios.id_usuarios)
             WHERE (tb_pedido_usuarios.id_peticion = %s) and (tb_pedido_usuarios.estado = 'PROCE') ;", $id_peticion);
         //echo "<pre><code>".$query_rs_usuarios."</code></pre>";
-        $rs_usuarios = mysql_query($query_rs_usuarios, $this->cyber) or die(mysql_error());
-        $row_rs_usuarios = mysql_fetch_assoc($rs_usuarios);
-        $totalRows_rs_usuarios = mysql_num_rows($rs_usuarios);
+
+        $row_rs_usuarios = conT($query_rs_usuarios);
+
         ?>
-        <?php
-        if ($totalRows_rs_usuarios > 0)
-            do {
+        <?php $i=0;
+            foreach ($row_rs_usuarios as $rs_usuarios ) {
+                $i++;
                 ?>
                 <?php echo $row_rs_usuarios["usuario"]; ?>|
-            <?php } while ($row_rs_usuarios = mysql_fetch_assoc($rs_usuarios)); ?>
+            <?php } ?>
         <?php
-        mysql_free_result($rs_usuarios);
-        return $totalRows_rs_usuarios;
+
+        return $i;
     }
 
     function darReq_busqueda($campo, $busqueda_parametro) {
-        mysql_select_db($this->database_cyber, $this->cyber);
+        //cambiado por pod
         $query_rs_usuarios = sprintf("SELECT pedidos.nombre,
                         pedidos.titulo,
                         pedidos.problema,
@@ -590,73 +579,73 @@ WHERE (pedidos.id_peticion = %s)', $this->GetSQLValueString($id_peticion, "text"
                         ON (pedidos.id_departamento = tb_departamento.id_departamneto)
              WHERE %s like %s order by pedidos.ESTADO desc ;", $campo, $this->GetSQLValueString($busqueda_parametro, "textlike"));
         //echo $query_rs_usuarios;
-        $rs_usuarios = mysql_query($query_rs_usuarios, $this->cyber) or die(mysql_error());
-        $row_rs_usuarios = mysql_fetch_assoc($rs_usuarios);
-        $totalRows_rs_usuarios = mysql_num_rows($rs_usuarios);
+        //$rs_usuarios = mysql_query($query_rs_usuarios, $this->cyber) or die(mysql_error());
+        $row_rs_usuarios = conT($query_rs_usuarios);
+
         ?>
         <div class="table-responsive">
-                <table id="darReq_busqueda-table" class="table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th  data-priority="1" >	#</th>
-                            <th data-priority="persist"><?=$this->trans("req_fun.nombresolicitante")?></th>
-                            <th data-priority="2"><?=$this->trans("req_fun.titulo")?></th>
-                            <!--<th data-priority="3"><?=$this->trans("req_fun.problema")?>	*</th>
+            <table id="darReq_busqueda-table" class="table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th  data-priority="1" >	#</th>
+                    <th data-priority="persist"><?=$this->trans("req_fun.nombresolicitante")?></th>
+                    <th data-priority="2"><?=$this->trans("req_fun.titulo")?></th>
+                    <!--<th data-priority="3"><?=$this->trans("req_fun.problema")?>	*</th>
                             <th data-priority="4"><?=$this->trans("req_fun.extencion")?>*</th>
                             <th data-priority="5"><?=$this->trans("req_fun.celular")?>*</th>-->
-                            <th data-priority="6"><?=$this->trans("req_fun.correo")?></th>
-                            <th data-priority="7"><?=$this->trans("req_fun.prioridad")?></th>
-                            <!--<td>	<?=$this->trans("req_fun.ip_1")?>	</td>-->
-                            <!--<td>	<?=$this->trans("req_fun.ip_2")?>	</td>-->
-                            <!--<td>	estacion	</td>-->
-                            <th data-priority="8"><?=$this->trans("req_fun.estado")?></th>
-                            <th data-priority="9"><?=$this->trans("req_fun.fechapedido")?></th>
-                            <!--<th data-priority="10"><?=$this->trans("req_fun.lugar")?>*</th>
+                    <th data-priority="6"><?=$this->trans("req_fun.correo")?></th>
+                    <th data-priority="7"><?=$this->trans("req_fun.prioridad")?></th>
+                    <!--<td>	<?=$this->trans("req_fun.ip_1")?>	</td>-->
+                    <!--<td>	<?=$this->trans("req_fun.ip_2")?>	</td>-->
+                    <!--<td>	estacion	</td>-->
+                    <th data-priority="8"><?=$this->trans("req_fun.estado")?></th>
+                    <th data-priority="9"><?=$this->trans("req_fun.fechapedido")?></th>
+                    <!--<th data-priority="10"><?=$this->trans("req_fun.lugar")?>*</th>
                             <th data-priority="11"><?=$this->trans("req_fun.actores")?>*</th>-->
-                            <?php if (get_autorizacion_si_no($_SESSION['permiso'], '5')) { ?><th><?=$this->trans("req_fun.edicion")?></th>  <?php } ?>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php do { ?>
-                            <tr>
-                                <th><?php echo $row_rs_usuarios["id_peticion"]; ?></td>
-                                <td><?php echo $row_rs_usuarios["nombre"]; ?></td>
-                                <td><?php echo $row_rs_usuarios["titulo"]; ?></td>
-                                <!--<td title="<?php echo $row_rs_usuarios["problema"]; ?>"><?php echo $row_rs_usuarios["problema_mini"]; ?></td>
+                    <?php if (get_autorizacion_si_no($_SESSION['permiso'], '5')) { ?><th><?=$this->trans("req_fun.edicion")?></th>  <?php } ?>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($row_rs_usuarios as $row_rs_usuarios ) { ?>
+                    <tr>
+                        <th><?php echo $row_rs_usuarios["id_peticion"]; ?></td>
+                        <td><?php echo $row_rs_usuarios["nombre"]; ?></td>
+                        <td><?php echo $row_rs_usuarios["titulo"]; ?></td>
+                        <!--<td title="<?php echo $row_rs_usuarios["problema"]; ?>"><?php echo $row_rs_usuarios["problema_mini"]; ?></td>
                                 <td><?php echo $row_rs_usuarios["extencion"]; ?></td>
                                 <td><?php echo $row_rs_usuarios["celular"]; ?></td>-->
-                                <td><?php echo $row_rs_usuarios["mail_req"]; ?></td>
-                                <td><?php echo $row_rs_usuarios["Prioridad"]; ?></td>
-                                <?php /*  <td><?php echo $row_rs_usuarios["ip_1"]; ?></td>
+                        <td><?php echo $row_rs_usuarios["mail_req"]; ?></td>
+                        <td><?php echo $row_rs_usuarios["Prioridad"]; ?></td>
+                        <?php /*  <td><?php echo $row_rs_usuarios["ip_1"]; ?></td>
                                 <td><?php echo $row_rs_usuarios["ip_2"]; ?></td>-->  */?>
-                                <td><?php echo $row_rs_usuarios["estado"]; ?></td>
-                                <td><?php echo $row_rs_usuarios["fecha_pedido"]; ?></td>
-                               <!-- <td>(<?php echo $row_rs_usuarios["estacion"]; ?>) <?php echo $row_rs_usuarios["descripcion"]; ?></td>
+                        <td><?php echo $row_rs_usuarios["estado"]; ?></td>
+                        <td><?php echo $row_rs_usuarios["fecha_pedido"]; ?></td>
+                        <!-- <td>(<?php echo $row_rs_usuarios["estacion"]; ?>) <?php echo $row_rs_usuarios["descripcion"]; ?></td>
                                 <td><?php $this->darUsuarioSdeReq_busqueda($row_rs_usuarios["id_peticion"], '%') ?></td>-->
-                                <?php if (get_autorizacion_si_no($_SESSION['permiso'], '5')) { ?>
-                                    <td>
-                                    <a  style="float:right"  href="javascript: fn_detalle_req(<?php echo $row_rs_usuarios["id_peticion"]; ?>)" class="ui-state-default ui-corner-all" title="<?=$this->trans("req_fun.editar")?>">
-                                        <?=$this->trans("req_fun.editar")?><i class="fa fa-pencil"></i>
-                                    </a>
-                                        <?php /*<!--<a  style="float:right"  href="javascript: fn_editar_req(<?php echo $row_rs_usuarios["id_peticion"]; ?>)" class="ui-state-default ui-corner-all" title=".ui-icon-check"><span class="ui-icon ui-icon-check"></span></a>-->*/ ?>
-                                    </td><?php } ?>
-                            </tr>
-                        <?php } while ($row_rs_usuarios = mysql_fetch_assoc($rs_usuarios)); ?>
-                    </tbody>
-                </table>
-                </div>
+                        <?php if (get_autorizacion_si_no($_SESSION['permiso'], '5')) { ?>
+                            <td>
+                            <a  style="float:right"  href="javascript: fn_detalle_req(<?php echo $row_rs_usuarios["id_peticion"]; ?>)" class="ui-state-default ui-corner-all" title="<?=$this->trans("req_fun.editar")?>">
+                                <?=$this->trans("req_fun.editar")?><i class="fa fa-pencil"></i>
+                            </a>
+                            <?php /*<!--<a  style="float:right"  href="javascript: fn_editar_req(<?php echo $row_rs_usuarios["id_peticion"]; ?>)" class="ui-state-default ui-corner-all" title=".ui-icon-check"><span class="ui-icon ui-icon-check"></span></a>-->*/ ?>
+                            </td><?php } ?>
+                    </tr>
+                <?php } ; ?>
+                </tbody>
+            </table>
+        </div>
 
 
         <?php
-        mysql_free_result($rs_usuarios);
+
     }
 
     function darReq_en_proceso($id_usuarios, $estado_soporte, $tipo,$nombreTabla="darUsuarioSdeReq-yha441a") {
-		$bandera6yt=false;
-		if($nombreTabla=='darUsuarioSdeReq-Jkuioo'&&$tipo=='SOLIC'){
-			$bandera6yt=true;
-		}
-        mysql_select_db($this->database_cyber, $this->cyber);
+        $bandera6yt=false;
+        if($nombreTabla=='darUsuarioSdeReq-Jkuioo'&&$tipo=='SOLIC'){
+            $bandera6yt=true;
+        }
+        //cambiado por pod
         $query_rs_usuarios = sprintf("SELECT DISTINCT pedidos.nombre,
                          pedidos.titulo,
                          pedidos.problema,
@@ -689,40 +678,39 @@ WHERE (pedidos.id_peticion = %s)', $this->GetSQLValueString($id_peticion, "text"
                     tb_pedido_usuarios.tipo=%s     
 					order by tb_pedido_usuarios.ID_PETICION;", $this->GetSQLValueString($id_usuarios, "text"), $this->GetSQLValueString($estado_soporte, "text"), $this->GetSQLValueString($tipo, "text"));
         //echo "<code><pre>".$query_rs_usuarios."</pre></code>";
-        $rs_usuarios = mysql_query($query_rs_usuarios, $this->cyber) or die(mysql_error());
-        $row_rs_usuarios = mysql_fetch_assoc($rs_usuarios);
-        $totalRows_rs_usuarios = mysql_num_rows($rs_usuarios);
+
+        $row_rs_usuarios = conT($query_rs_usuarios);
+
         ?>
         <div class="table-responsive">
-        <table id="<?php echo $nombreTabla;?>" class="table-striped table-bordered">
-        <thead>
-            <tr>
-                <th><?=$this->trans("req_fun.dash")?></th>
-                <?php if (get_autorizacion_si_no($_SESSION['permiso'], '6')) { ?>
-                <th><?=$this->trans("req_fun.tecnico")?></th><?php } ?>
-                <th><?=$this->trans("req_fun.solicitante")?></th>
-                <th><?=$this->trans("req_fun.requerimiento")?></th>
-                <!--<th><?=$this->trans("req_fun.observacion")?></th>
+            <table id="<?php echo $nombreTabla;?>" class="table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th><?=$this->trans("req_fun.dash")?></th>
+                    <?php if (get_autorizacion_si_no($_SESSION['permiso'], '6')) { ?>
+                        <th><?=$this->trans("req_fun.tecnico")?></th><?php } ?>
+                    <th><?=$this->trans("req_fun.solicitante")?></th>
+                    <th><?=$this->trans("req_fun.requerimiento")?></th>
+                    <!--<th><?=$this->trans("req_fun.observacion")?></th>
                 <th><?=$this->trans("req_fun.extencion")?></th>-->
-                <!--<th><?=$this->trans("req_fun.celular")?></th>-->
-                <!--<th><?=$this->trans("req_fun.correo")?></th>-->
-                <th><?=$this->trans("req_fun.prioridad")?></th>
-                <?php /*<!--<td><?=$this->trans("req_fun.ip_1")?></td>-->
+                    <!--<th><?=$this->trans("req_fun.celular")?></th>-->
+                    <!--<th><?=$this->trans("req_fun.correo")?></th>-->
+                    <th><?=$this->trans("req_fun.prioridad")?></th>
+                    <?php /*<!--<td><?=$this->trans("req_fun.ip_1")?></td>-->
                 <!--<td><?=$this->trans("req_fun.ip_2")?></td>-->*/ ?>
-                <th><?=$this->trans("req_fun.estado")?></th>
-                <th><?=$this->trans("req_fun.fechapedido")?></th>
-                <!--<th><?=$this->trans("req_fun.lugar")?></th>-->
-                <th><?=$this->trans("req_fun.edicion")?></th>
-            </tr>
-            </thead>
-                    <tbody>
-            <?php
-            if ($totalRows_rs_usuarios > 0)
-                do {
-                    ?>
-                    <tr>
-                        <td><?php echo $row_rs_usuarios["id_peticion"]; ?></td>
-                        <?php if (get_autorizacion_si_no($_SESSION['permiso'], '6')) { ?><td>
+                    <th><?=$this->trans("req_fun.estado")?></th>
+                    <th><?=$this->trans("req_fun.fechapedido")?></th>
+                    <!--<th><?=$this->trans("req_fun.lugar")?></th>-->
+                    <th><?=$this->trans("req_fun.edicion")?></th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                    foreach ($row_rs_usuarios as $rs_usuarios ) {
+                        ?>
+                        <tr>
+                            <td><?php echo $row_rs_usuarios["id_peticion"]; ?></td>
+                            <?php if (get_autorizacion_si_no($_SESSION['permiso'], '6')) { ?><td>
                                 <?php $presentador2w3 = $this->dartecnico_asuntado($row_rs_usuarios["id_peticion"]) ?>
                                 <?php if ($presentador2w3 == 0) { ?>
                                     <a href="javascript: fn_asignate_requerimiento(<?php echo $row_rs_usuarios["id_peticion"]; ?>,<?php echo isset($_SESSION['MM_IDUsername']) ? $_SESSION['MM_IDUsername'] : ''; ?>,'<?php echo $nombreTabla;?>')" class="ui-btn ui-icon-home ui-btn-icon-left" title="<?=$this->trans("req_fun.asignarseesterequerimiento")?>"><?=$this->trans("req_fun.asignarse")?></a>
@@ -735,42 +723,40 @@ WHERE (pedidos.id_peticion = %s)', $this->GetSQLValueString($id_peticion, "text"
                                         <a  style="float:right"  href="javascript: fn_Kitar_pedido_ususrior_PROCESO(<?php echo $dafty57_aux2['id_pedido_usuarios']; ?>,'<?php echo $nombreTabla;?>')" class="ui-state-default ui-corner-all" title="<?=$this->trans("req_fun.quitar")?>"><?=$this->trans("req_fun.quitar")?><i class="fa fa-times"></i>
                                         </a> <?php } ?>
                                 <?php } ?>
-                            </td><?php } ?>
-                        <td><?php echo $row_rs_usuarios["nombre"]; ?></td>
-                        <td><?php echo $row_rs_usuarios["titulo"]; ?></td>
-                        <!--<td title="<?php echo $row_rs_usuarios["problema"]; ?>"><?php echo $row_rs_usuarios["problema_mini"]; ?></td>
+                                </td><?php } ?>
+                            <td><?php echo $row_rs_usuarios["nombre"]; ?></td>
+                            <td><?php echo $row_rs_usuarios["titulo"]; ?></td>
+                            <!--<td title="<?php echo $row_rs_usuarios["problema"]; ?>"><?php echo $row_rs_usuarios["problema_mini"]; ?></td>
                         <td><?php echo $row_rs_usuarios["extencion"]; ?></td>
                         <td><?php echo $row_rs_usuarios["celular"]; ?></td>
                         <td><?php echo $row_rs_usuarios["mail_req"]; ?></td>-->
-                        <td><?php echo $row_rs_usuarios["Prioridad"]; ?></td>
-                        <?php /*<!--<td><?php echo $row_rs_usuarios["ip_1"]; ?></td>
+                            <td><?php echo $row_rs_usuarios["Prioridad"]; ?></td>
+                            <?php /*<!--<td><?php echo $row_rs_usuarios["ip_1"]; ?></td>
                         <td><?php echo $row_rs_usuarios["ip_2"]; ?></td>-->*/?>
-                        <td><?php echo $row_rs_usuarios["estado"]; ?></td>
-                        <td><?php echo $row_rs_usuarios["fecha_pedido"]; ?></td>
-                        <!--<td>(<?php echo $row_rs_usuarios["estacion"]; ?>)<?php echo $row_rs_usuarios["descripcion"]; ?></td>-->
-                        <td><a  style="float:right"  href="javascript: fn_detalle_req(<?php echo $row_rs_usuarios["id_peticion"]; ?>)" class="ui-state-default ui-corner-all" title="<?=$this->trans("req_fun.editar")?>">
-                                <?=$this->trans("req_fun.editar")?><i class="fa fa-pencil"></i>
-                            </a>
-                            <?php /*<!--<a  style="float:right"  href="javascript: fn_editar_req(<?php echo $row_rs_usuarios["id_peticion"]; ?>)" class="ui-state-default ui-corner-all" title=".ui-icon-check"><span class="ui-icon ui-icon-check"></span></a>-->*/ ?>
-                        </td>
-                    </tr>
-                <?php } while ($row_rs_usuarios = mysql_fetch_assoc($rs_usuarios)); ?>
-               </tbody>
-        </table>
-		</div>
+                            <td><?php echo $row_rs_usuarios["estado"]; ?></td>
+                            <td><?php echo $row_rs_usuarios["fecha_pedido"]; ?></td>
+                            <!--<td>(<?php echo $row_rs_usuarios["estacion"]; ?>)<?php echo $row_rs_usuarios["descripcion"]; ?></td>-->
+                            <td><a  style="float:right"  href="javascript: fn_detalle_req(<?php echo $row_rs_usuarios["id_peticion"]; ?>)" class="ui-state-default ui-corner-all" title="<?=$this->trans("req_fun.editar")?>">
+                                    <?=$this->trans("req_fun.editar")?><i class="fa fa-pencil"></i>
+                                </a>
+                                <?php /*<!--<a  style="float:right"  href="javascript: fn_editar_req(<?php echo $row_rs_usuarios["id_peticion"]; ?>)" class="ui-state-default ui-corner-all" title=".ui-icon-check"><span class="ui-icon ui-icon-check"></span></a>-->*/ ?>
+                            </td>
+                        </tr>
+                    <?php }  ?>
+                </tbody>
+            </table>
+        </div>
         <?php
-        mysql_free_result($rs_usuarios);
+
     }
 
     function darIdPeticion() {
-        mysql_select_db($this->database_cyber, $this->cyber);
+        //cambiado por pod
         $query_rs_usuarios = "select max(p.id_peticion) actual_id from  pedidos as p; ";
         //echo $query_rs_usuarios;
-        $rs_usuarios = mysql_query($query_rs_usuarios, $this->cyber) or die(mysql_error());
-        $row_rs_usuarios = mysql_fetch_assoc($rs_usuarios);
-        $totalRows_rs_usuarios = mysql_num_rows($rs_usuarios);
+
+        $row_rs_usuarios = conectarseU($query_rs_usuarios);
         $dator = $row_rs_usuarios['actual_id'];
-        mysql_free_result($rs_usuarios);
         return $dator;
     }
 
@@ -785,7 +771,7 @@ WHERE (pedidos.id_peticion = %s)', $this->GetSQLValueString($id_peticion, "text"
             case "text":
                 $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
                 break;
-			case "textlike":
+            case "textlike":
                 $theValue = ($theValue != "") ? "'%" . $theValue . "%'" : "NULL";
                 break;
             case "long":
@@ -830,7 +816,7 @@ WHERE (pedidos.id_peticion = %s)', $this->GetSQLValueString($id_peticion, "text"
     }
 
     function get_criticidad($select_name, $Prioridad = -1) {
-        mysql_select_db($this->database_cyber, $this->cyber);
+        //cambiado por pod
         $query_rs_usuarios = "SELECT tb_criticidades.id_tabla,
        tb_criticidades.cod_criticidad,
        tb_criticidades.Prioridad AS label,
@@ -841,9 +827,8 @@ WHERE (pedidos.id_peticion = %s)', $this->GetSQLValueString($id_peticion, "text"
        tb_criticidades.observaciones
   FROM  tb_criticidades tb_criticidades; ";
         //echo $query_rs_usuarios;
-        $rs_usuarios = mysql_query($query_rs_usuarios, $this->cyber) or die(mysql_error());
-        $row_rs_usuarios = mysql_fetch_assoc($rs_usuarios);
-        $totalRows_rs_usuarios = mysql_num_rows($rs_usuarios);
+
+        $row_rs_usuarios =conT($query_rs_usuarios);
         ?>
         <script>
             function addmensaje_34(label) {
@@ -857,14 +842,14 @@ WHERE (pedidos.id_peticion = %s)', $this->GetSQLValueString($id_peticion, "text"
         <?php $aux = array(); ?>
         <select id="<?php echo $select_name ?>" name="<?php echo $select_name ?>" onchange="addmensaje_34(this.value)" class="form-control" >
             <option value="---"><?=$this->trans("req_fun.selecciones")?></option>
-            <?php do { ?>
+            <?php foreach ($row_rs_usuarios as $row_rs_usuarios ) { ?>
                 <?php $aux[trim($row_rs_usuarios['value'])] = $row_rs_usuarios; ?>
                 <option value="<?php echo trim($row_rs_usuarios['value']); ?>" <?php
                 if (!(strcmp(trim($row_rs_usuarios['value']), trim($Prioridad)))) {
                     echo "selected=\"selected\"";
                 }
                 ?>><?php echo $row_rs_usuarios['label']; ?></option>
-                    <?php } while ($row_rs_usuarios = mysql_fetch_assoc($rs_usuarios)); ?>
+            <?php }; ?>
         </select>
         <!--<pre>
         <?php // print_r($aux); ?>
@@ -876,11 +861,11 @@ WHERE (pedidos.id_peticion = %s)', $this->GetSQLValueString($id_peticion, "text"
         </script>
         <div id="mensaje_34"></div>
         <?php
-        mysql_free_result($rs_usuarios);
+
     }
 
     function get_archivos_subidos_select_departamento_txt($id_departamento = -1) {
-        mysql_select_db($this->database_cyber, $this->cyber);
+        //cambiado por pod
         $query_rs_usuarios = sprintf("SELECT tb_departamento.id_departamneto,
                         tb_departamento.descripcion,
                         tb_departamento.observacion,
@@ -893,53 +878,52 @@ WHERE (pedidos.id_peticion = %s)', $this->GetSQLValueString($id_peticion, "text"
                         tb_departamento.descripcion ASC,
                         tb_departamento.observacion ASC ;", $this->GetSQLValueString($id_departamento, "int"));
         //echo $query_rs_usuarios;
-        $rs_usuarios = mysql_query($query_rs_usuarios, $this->cyber) or die(mysql_error());
-        $row_rs_usuarios = mysql_fetch_assoc($rs_usuarios);
-        $totalRows_rs_usuarios = mysql_num_rows($rs_usuarios);
-        do {
+
+        $row_rs_usuarios = conT($query_rs_usuarios);
+
+        foreach ($row_rs_usuarios as $rs_usuarios ) {
             $optiongroup = $row_rs_usuarios['estacion'] . '-' . $row_rs_usuarios['descripcion'];
-        } while ($row_rs_usuarios = mysql_fetch_assoc($rs_usuarios));
-        mysql_free_result($rs_usuarios);
+        }
+
         return $optiongroup;
     }
-	    public static function codificarHTML($cadena) {
-            $cadena= utf8_encode($cadena);
-            $arrAcentos = array (
-                    'á' => "&aacute;",
-                    'é' => '&eacute;',
-                    'í' => '&iacute;',
-                    'ó' => '&oacute;',
-                    'ú' => '&uacute;',
-                    'Á' => "&Aacute;",
-                    'É' => '&Eacute;',
-                    'Í' => '&Iacute;',
-                    'Ó' => '&Oacute;',
-                    'Ú' => '&Uacute;',
-                    'Ñ' => "&Ntilde;",
-                    'ñ' => "&ntilde;",
-                    '¿' => '&iquest;',
+    public static function codificarHTML($cadena) {
+        $cadena= utf8_encode($cadena);
+        $arrAcentos = array (
+            'á' => "&aacute;",
+            'é' => '&eacute;',
+            'í' => '&iacute;',
+            'ó' => '&oacute;',
+            'ú' => '&uacute;',
+            'Á' => "&Aacute;",
+            'É' => '&Eacute;',
+            'Í' => '&Iacute;',
+            'Ó' => '&Oacute;',
+            'Ú' => '&Uacute;',
+            'Ñ' => "&Ntilde;",
+            'ñ' => "&ntilde;",
+            '¿' => '&iquest;',
 
-            );
-            $cadena = explode ( " ", $cadena );
-            $arrCadena = array ();
+        );
+        $cadena = explode ( " ", $cadena );
+        $arrCadena = array ();
 
-            foreach ( $cadena as $valor ) {
-                $band = 0;
-                foreach ( $arrAcentos as $key => $value ) {
+        foreach ( $cadena as $valor ) {
+            $band = 0;
+            foreach ( $arrAcentos as $key => $value ) {
 
-                    if (strpos ( $valor, $key ) !== false) {
-                        $valor = str_replace ( $key, $value, $valor );
-                        $band = 2;
-                    }
-                } // fin foreach interno
-                $arrCadena [] = trim ( $valor );
-            } // fin foreach
-            $cadenaFinal = implode ( " ", $arrCadena );
-            return $cadenaFinal;
-        } // fin función
+                if (strpos ( $valor, $key ) !== false) {
+                    $valor = str_replace ( $key, $value, $valor );
+                    $band = 2;
+                }
+            } // fin foreach interno
+            $arrCadena [] = trim ( $valor );
+        } // fin foreach
+        $cadenaFinal = implode ( " ", $arrCadena );
+        return $cadenaFinal;
+    } // fin función
 
     function get_archivos_subidos_select($select_name, $id_departamento = -1) {
-        mysql_select_db($this->database_cyber, $this->cyber);
         $query_rs_usuarios = "SELECT tb_departamento.id_departamneto,
                         convert(cast(convert(tb_departamento.descripcion using utf8) as binary) using utf8) AS descripcion,
                         tb_departamento.observacion,
@@ -951,17 +935,14 @@ WHERE (pedidos.id_peticion = %s)', $this->GetSQLValueString($id_peticion, "text"
                ORDER BY tb_estaciones.estacion ASC,
                         tb_departamento.descripcion ASC,
                         tb_departamento.observacion ASC; ";
-        //echo $query_rs_usuarios;
-        $rs_usuarios = mysql_query($query_rs_usuarios, $this->cyber) or die(mysql_error());
-        $row_rs_usuarios = mysql_fetch_assoc($rs_usuarios);
-        $totalRows_rs_usuarios = mysql_num_rows($rs_usuarios);
+        $row_rs_usuarios = conectarseT($query_rs_usuarios);
         ?>
         <select id="<?php echo $select_name ?>" name="<?php echo $select_name ?>" class="form-control" >
             <option value="---"><?=$this->trans("req_fun.selecciones")?></option>
             <?php $optiongroup = ""; ?>
             <?php $optiongroupaux = ""; ?>
             <?php $count = 0; ?>
-            <?php do { ?>
+            <?php foreach ($row_rs_usuarios as $rs_usuarios ) {?>
                 <?php
                 $optiongroup = $row_rs_usuarios['estacion'];
                 if ($optiongroup != $optiongroupaux) {
@@ -977,24 +958,24 @@ WHERE (pedidos.id_peticion = %s)', $this->GetSQLValueString($id_peticion, "text"
                         echo "selected=\"selected\"";
                     }
                     ?> ><?php echo $this->codificarHTML($row_rs_usuarios['estacion']); ?> - <?php echo $this->codificarHTML($row_rs_usuarios['descripcion']); ?></option><?php } ?>
-                    <?php } while ($row_rs_usuarios = mysql_fetch_assoc($rs_usuarios)); ?>
-                    <?php
-                    if (($count) != 0) {
-                        echo "</OPTGROUP>";
-                    }
-                    ?>
+            <?php }  ?>
+            <?php
+            if (($count) != 0) {
+                echo "</OPTGROUP>";
+            }
+            ?>
         </select>
         <?php
-        mysql_free_result($rs_usuarios);
+
     }
 
     function getRealIP_home() {
         return getenv('HTTP_CLIENT_IP')? :
-                getenv('HTTP_X_FORWARDED_FOR')? :
-                        getenv('HTTP_X_FORWARDED')? :
-                                getenv('HTTP_FORWARDED_FOR')? :
-                                        getenv('HTTP_FORWARDED')? :
-                                                getenv('REMOTE_ADDR');
+            getenv('HTTP_X_FORWARDED_FOR')? :
+                getenv('HTTP_X_FORWARDED')? :
+                    getenv('HTTP_FORWARDED_FOR')? :
+                        getenv('HTTP_FORWARDED')? :
+                            getenv('REMOTE_ADDR');
     }
 
     function set_requerimiento($nombre, $id_departamento, $titulo, $problema, $extencion, $celular, $mail_req, $Prioridad, $ip_1, $ip_2, $uniq) {
@@ -1005,8 +986,8 @@ WHERE (pedidos.id_peticion = %s)', $this->GetSQLValueString($id_peticion, "text"
 )", $this->GetSQLValueString($nombre, "text"), $this->GetSQLValueString($id_departamento, "text"), $this->GetSQLValueString($titulo, "text"), $this->GetSQLValueString($problema, "text"), $this->GetSQLValueString($extencion, "text"), $this->GetSQLValueString($celular, "text"), $this->GetSQLValueString($mail_req, "text"), $this->GetSQLValueString($Prioridad, "text"), $this->GetSQLValueString($ip_1, "text"), $this->GetSQLValueString($ip_2, "text"), $this->GetSQLValueString($uniq, "text")
         );
         //echo $deleteSQL;
-        mysql_select_db($this->database_cyber, $this->cyber);
-        $rs_usuarios = mysql_query($deleteSQL, $this->cyber) or die(mysql_error());
+        //cambiado por pod
+        $rs_usuarios = insertT($deleteSQL);
         $datodswe45 = -1;
         if ($rs_usuarios) {
             $datodswe45 = $this->darIdPeticion();
@@ -1033,10 +1014,10 @@ WHERE (pedidos.id_peticion = %s)', $this->GetSQLValueString($id_peticion, "text"
             return $datodswe45;
         }
     }
-	/**
-	*gatillos inicio
-	*/
-	function TR_PEDIDO_INSERT($ID_PETICION, $NOMBRE, $ESTADO) {
+    /**
+     *gatillos inicio
+     */
+    function TR_PEDIDO_INSERT($ID_PETICION, $NOMBRE, $ESTADO) {
         $deleteSQL = sprintf("INSERT INTO tb_log_pedido (
    ID_PETICION
   ,NOMBRE
@@ -1050,8 +1031,8 @@ WHERE (pedidos.id_peticion = %s)', $this->GetSQLValueString($id_peticion, "text"
 );", $this->GetSQLValueString($ID_PETICION, "int"), $this->GetSQLValueString($NOMBRE, "text"), $this->GetSQLValueString($ESTADO, "text"));
 
         //echo $deleteSQL;
-        mysql_select_db($this->database_cyber, $this->cyber);
-        $rs_usuarios = mysql_query($deleteSQL, $this->cyber) or die(mysql_error());
+        //cambiado por pod
+        $rs_usuarios = insertT($deleteSQL);
         $datodswe45 = -1;
         if ($rs_usuarios) {
             $datodswe45 = 1;
@@ -1062,14 +1043,14 @@ WHERE (pedidos.id_peticion = %s)', $this->GetSQLValueString($id_peticion, "text"
             return $datodswe45;
         }
     }
-	/**
-	*gatillos fin
-	*/
-	/**
+    /**
+     *gatillos fin
+     */
+    /**
      * translate desde laravel
      */
     public $traductor;
-	function translate($radix ="/../../"){
+    function translate($radix ="/../../"){
         require __DIR__.$radix.'bootstrap/autoload.php';
 
 // You need to specify where the translation files is

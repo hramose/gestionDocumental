@@ -7,6 +7,7 @@ require_once('../Connections/req_fun.php');
 require_once('../Connections/cyber.php');
 $rek = new Req_Controller($database_cyber, $cyber);
 $rsol = $rek->darUsuarioSolicdeReq_dato($_REQUEST['id_peticion']);
+//dd($rsol);
 $usu_sol = $rsol['usuario'];
 $id_sol = $rsol['id_usuarios'];
 if (isset($_SESSION['tecnico_user']) || (isset($_SESSION['tecnico_user']) ? $_SESSION['tecnico_user'] : '') == "") {

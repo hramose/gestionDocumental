@@ -94,25 +94,9 @@ if (isset($_POST['usuario'])) {
             $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];
         }
         header("Location: " . $MM_redirectLoginSuccess);
-    }
-    /*if ($loginFoundUser==0){
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    = mysql_result($LoginRS, 0, 'user_nivel');
-
-        //declare two session variables and assign them
-        /* echo $loginUsername;
-          echo $loginStrId;
-          echo $loginStrGroup;
-          echo "<pre>";
-          //	echo md5('HelloWorld');
-          echo $LoginRS__query;
-          echo "</pre>"; * /
-
-
-
     } else {
         header("Location: " . $MM_redirectLoginFailed);
-    }*/
+    }
 }
 ?>
 <!DOCTYPE html>

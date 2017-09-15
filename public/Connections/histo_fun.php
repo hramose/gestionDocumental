@@ -11,7 +11,7 @@ class Historial_Controller {
     }
 
     function ver_historial_cambio_actividades($id_peticion) {
-        mysql_select_db($this->database_cyber, $this->cyber);
+
         $query_rs_usuarios = sprintf("SELECT tb_log_pedido_usuarios.id_peticion,
                   tb_log_pedido_usuarios.tipo,
                   tb_log_pedido_usuarios.estado,
@@ -27,9 +27,9 @@ class Historial_Controller {
                   ON (tb_usuarios.id_usuarios = tb_log_pedido_usuarios.id_usuarios)
              WHERE tb_log_pedido_usuarios.id_peticion = %s order by tb_log_pedido_usuarios.fecha_insert_log desc ", $this->GetSQLValueString($id_peticion, "int"));
         //echo $query_rs_usuarios;
-        $rs_usuarios = mysql_query($query_rs_usuarios, $this->cyber) or die(mysql_error());
-        $row_rs_usuarios = mysql_fetch_assoc($rs_usuarios);
-        $totalRows_rs_usuarios = mysql_num_rows($rs_usuarios);
+
+        $row_rs_usuarios = conectarseT($query_rs_usuarios);
+
         ?>
         <table border="1" align="center">
             <tr>    
@@ -41,7 +41,7 @@ class Historial_Controller {
                 <th>Acción</th>
                 <th>Fecha de acción</th>  
             </tr>
-        <?php do { ?>
+        <?php foreach ($row_rs_usuarios as $row_rs_usuarios ) { ?>
                 <tr>      
                     <td  title="<?php echo $row_rs_usuarios["nombre"]; ?> <?php echo $row_rs_usuarios["apellido"]; ?> "><?php echo $row_rs_usuarios["usuario"]; ?></td>
                     <td><?php echo $row_rs_usuarios["fecha_ini"]; ?></td>
@@ -51,11 +51,11 @@ class Historial_Controller {
                     <td><?php echo $row_rs_usuarios["accion"]; ?></td>
                     <td><?php echo $row_rs_usuarios["fecha_insert_log"]; ?></td>
                 </tr>
-        <?php } while ($row_rs_usuarios = mysql_fetch_assoc($rs_usuarios)); ?>
+        <?php } ?>
         </table>
 
         <?php
-        mysql_free_result($rs_usuarios);
+        
     }
 
     function ver_historial_cambio_peticion($id_pedido_usuarios) {

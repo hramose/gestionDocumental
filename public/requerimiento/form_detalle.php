@@ -53,12 +53,10 @@ if ((isset($_REQUEST["MM_update"])) && ($_REQUEST["MM_update"] == "formreq_sssds
     </head>
 
     <body>
-    <!--<pre>
+
         <?php //print_r($p);  ?>
-    </pre>-->
-    <!--<pre>
-            *<?php // print_r($_SESSION);      ?>*
-    </pre>-->
+        <?php // print_r($_SESSION);      ?>
+
         <script >
             $(document).delegate("#aboutPage", "pageinit", function () {
                 alert('A page with an id of "aboutPage" was just created by jQuery Mobile!');

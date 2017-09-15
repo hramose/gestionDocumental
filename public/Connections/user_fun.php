@@ -15,8 +15,8 @@ class Usuario_Controller {
         $deleteSQL = sprintf("delete from tb_pedido_usuarios WHERE id_pedido_usuarios = %s
 ", $this->GetSQLValueString($id_pedido_usuarios, "int"));
         //echo $deleteSQL;
-        mysql_select_db($this->database_cyber, $this->cyber);
-        $rs_usuarios = mysql_query($deleteSQL, $this->cyber) or die(mysql_error());
+
+        $rs_usuarios = insertT($deleteSQL);
 
         if ($rs_usuarios) {
             echo '<div class="ui-widget">
@@ -60,12 +60,12 @@ class Usuario_Controller {
 ", $this->GetSQLValueString($id_peticion, "int"), $this->GetSQLValueString($id_usuarios, "int"), $this->GetSQLValueString($tipo, "text"), $this->GetSQLValueString($estado, "text"), $this->GetSQLValueString($fecha_ini, "text"), $this->GetSQLValueString($fecha_fin, "text"), $this->GetSQLValueString($total, "text"), $this->GetSQLValueString($descripcion, "text")
         );
         //echo $deleteSQL;
-		//echo "*************************************************************************************************";
+
 		//file_put_contents('../log_'.date("j.n.Y").'7548xc5.txt', $deleteSQL, FILE_APPEND);
 		//$this->file_put_contents_atomic("wcadena.log", $deleteSQL)	;
 		error_log("este es una prueba!", 0);
-        mysql_select_db($this->database_cyber, $this->cyber);
-        $rs_usuarios = mysql_query($deleteSQL, $this->cyber) or die(mysql_error());
+
+        $rs_usuarios = insertT($deleteSQL);
 
         if ($rs_usuarios) {
             echo '<div class="ui-widget">
@@ -85,7 +85,7 @@ class Usuario_Controller {
     }
 
     function dar_lista_usuarios_accion($nombre_variable) {
-        mysql_select_db($this->database_cyber, $this->cyber);
+
         $query_rs_usuarios = sprintf("SELECT tb_usuarios.usuario,
        tb_usuarios.nombre+ ' '+
        tb_usuarios.apellido as nombre,
@@ -104,9 +104,9 @@ class Usuario_Controller {
        tb_usuarios.id_usuarios
   FROM  tb_usuarios tb_usuarios where tb_usuarios.user_nivel > 0 ;");
         //echo $query_rs_usuarios;
-        $rs_usuarios = mysql_query($query_rs_usuarios, $this->cyber) or die(mysql_error());
-        $row_rs_usuarios = mysql_fetch_assoc($rs_usuarios);
-        $totalRows_rs_usuarios = mysql_num_rows($rs_usuarios);
+
+        $row_rs_usuarios = conectarseT($query_rs_usuarios);
+
         ?>
         <table id="darUsuarioSdeReq65t" class="table-striped table-bordered">
             <thead>
@@ -120,7 +120,7 @@ class Usuario_Controller {
                 <th>	Tipo Usuario	</th>            </tr>
                 </thead>
   <tbody>
-        <?php do { ?>
+        <?php foreach ($row_rs_usuarios as $row_rs_usuarios ) { ?>
                 <tr onclick="<?php echo $nombre_variable; ?>(<?php echo $row_rs_usuarios["id_usuarios"]; ?>, '<?php echo $row_rs_usuarios["usuario"]; ?>')" style="cursor:pointer">
                     <td><?php echo $row_rs_usuarios["usuario"]; ?></td>
                     <td><?php echo $row_rs_usuarios["nombre"]; ?></td>
@@ -130,12 +130,12 @@ class Usuario_Controller {
                     <td><?php echo $row_rs_usuarios["correo_corporativo"]; ?></td>-->
                     <td><?php echo $row_rs_usuarios["user_nivel"]; ?></td>
                 </tr>
-        <?php } while ($row_rs_usuarios = mysql_fetch_assoc($rs_usuarios)); ?>
+        <?php } ; ?>
         </tbody>
         </table>
 
         <?php
-        mysql_free_result($rs_usuarios);
+
     }
 
     function get_user_nivel($select_name, $campo) {
@@ -186,8 +186,8 @@ class Usuario_Controller {
 WHERE id_usuarios = %s;", $this->GetSQLValueString($usuario, "text"), $this->GetSQLValueString($clave, "text"), $this->GetSQLValueString($nombre, "text"), $this->GetSQLValueString($apellido, "text"), $this->GetSQLValueString($correo_corporativo, "text"), $this->GetSQLValueString($correo_personal, "text"), $this->GetSQLValueString($telefono, "text"), $this->GetSQLValueString($celular_corporativo, "text"), $this->GetSQLValueString($celular_personal, "text"), $this->GetSQLValueString($user_nivel, "text"), $this->GetSQLValueString($id_usuarios, "int")
         );
 //	echo $deleteSQL;
-        mysql_select_db($this->database_cyber, $this->cyber);
-        $rs_usuarios = mysql_query($deleteSQL, $this->cyber) or die(mysql_error());
+
+        $rs_usuarios = insertT($deleteSQL);
 
         if ($rs_usuarios) {
             echo '<div class="ui-widget">
@@ -225,12 +225,8 @@ WHERE id_usuarios = %s;", $this->GetSQLValueString($usuario, "text"), $this->Get
 FROM  tb_usuarios tb_usuarios
 WHERE (tb_usuarios.id_usuarios = %s)', $this->GetSQLValueString($id_usuarios, "text")
         );
-        mysql_select_db($this->database_cyber, $this->cyber);
-        $rs_usuarios = mysql_query($deleteSQL, $this->cyber) or die(mysql_error());
-        $row_rs_usuarios = mysql_fetch_assoc($rs_usuarios);
-        $totalRows_rs_usuarios = mysql_num_rows($rs_usuarios);
+        $row_rs_usuarios = conectarseU($deleteSQL);
         $dato = $row_rs_usuarios;
-        mysql_free_result($rs_usuarios);
         return $dato;
     }
 
@@ -261,8 +257,8 @@ NOW()
 )", $this->GetSQLValueString($usuario, "text"), $this->GetSQLValueString($clave, "text"), $this->GetSQLValueString($nombre, "text"), $this->GetSQLValueString($apellido, "text"), $this->GetSQLValueString($correo_corporativo, "text"), $this->GetSQLValueString($correo_personal, "text"), $this->GetSQLValueString($telefono, "text"), $this->GetSQLValueString($celular_corporativo, "text"), $this->GetSQLValueString($celular_personal, "text"), $this->GetSQLValueString($user_nivel, "text")
         );
         //echo $deleteSQL;
-        mysql_select_db($this->database_cyber, $this->cyber);
-        $rs_usuarios = mysql_query($deleteSQL, $this->cyber) or die(mysql_error());
+
+        $rs_usuarios = insertT($deleteSQL);
 
         if ($rs_usuarios) {
             echo '<div class="ui-widget">
@@ -282,7 +278,7 @@ NOW()
     }
 
     function dar_lista_usuario() {
-        mysql_select_db($this->database_cyber, $this->cyber);
+
         $query_rs_usuarios = sprintf("SELECT tb_usuarios.usuario,
        tb_usuarios.nombre+ ' '+
        tb_usuarios.apellido as nombre,
@@ -300,10 +296,10 @@ NOW()
        tb_usuarios.telefono,
        tb_usuarios.id_usuarios
   FROM  tb_usuarios tb_usuarios;");
-        //echo $query_rs_usuarios;
-        $rs_usuarios = mysql_query($query_rs_usuarios, $this->cyber) or die(mysql_error());
-        $row_rs_usuarios = mysql_fetch_assoc($rs_usuarios);
-        $totalRows_rs_usuarios = mysql_num_rows($rs_usuarios);
+
+
+        $row_rs_usuarios = conT($query_rs_usuarios);
+
         ?>
         <div class="box-body table-responsive no-padding">
          <table id="darUsuarioSdeReq-vf66gt" class="table-striped table-bordered">
@@ -320,7 +316,7 @@ NOW()
             </tr>
             </thead>
   <tbody>
-        <?php do { ?>
+        <?php foreach ($row_rs_usuarios as $row_rs_usuarios ) { ?>
                 <tr>
                     <td><?php echo $row_rs_usuarios["usuario"]; ?></td>
                     <td><?php echo $row_rs_usuarios["nombre"]; ?></td>
@@ -333,12 +329,12 @@ NOW()
                         <a  style="float:right"  href="javascript: fn_usuarios_edit(<?php echo $row_rs_usuarios["id_usuarios"]; ?>)" class="ui-state-default ui-corner-all" title=".ui-icon-check"><span class="ui-icon ui-icon-check">Editar</span></a>
                     </td>
                 </tr>
-        <?php } while ($row_rs_usuarios = mysql_fetch_assoc($rs_usuarios)); ?>
+        <?php } ; ?>
         </tbody>
         </table>
         </div>
         <?php
-        mysql_free_result($rs_usuarios);
+
     }
 
     function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") {
