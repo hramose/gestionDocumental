@@ -39,8 +39,8 @@ if (isset($_SERVER['QUERY_STRING'])) {
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
     $updateSQL = sprintf("UPDATE Usuario SET Mai_Usuario=%s, Nom_Usuario=%s, Ape_Usuario=%s, pass=%s, descripcion=%s ,Tel_Usuario =%s ,Car_Usuario =%s WHERE Id_Usuario=%s", GetSQLValueString($_POST['user_usuario'], "text"), GetSQLValueString($_POST['user_nombre'], "text"), GetSQLValueString($_POST['user_apellido'], "text"), GetSQLValueString($_POST['user_pass'], "text"), GetSQLValueString($_POST['user_nivel'], "int"), GetSQLValueString($_POST['Tel_Usuario'], "text"), GetSQLValueString($_POST['Car_Usuario'], "text"), GetSQLValueString($_POST['user_id'], "int"));
 
-    mysql_select_db($database_cyber, $cyber);
-    $Result1 = mysql_query($updateSQL, $cyber) or die(mysql_error());
+
+    $Result1 = insertT($updateSQL);
 
     $updateGoTo = "list.php";
     if (isset($_SERVER['QUERY_STRING'])) {
@@ -67,9 +67,9 @@ $query_rs_usuar = sprintf("SELECT Usuario.Id_Usuario,
        pass,
        Usuario.descripcion
   FROM ChequerasCorporativas.Usuario Usuario WHERE Id_Usuario = %s", GetSQLValueString($colname_rs_usuar, "int"));
-$rs_usuar = mysql_query($query_rs_usuar, $cyber) or die(mysql_error());
-$row_rs_usuar = mysql_fetch_assoc($rs_usuar);
-$totalRows_rs_usuar = mysql_num_rows($rs_usuar);
+//$rs_usuar = mysql_query($query_rs_usuar, $cyber) or die(mysql_error());
+$row_rs_usuar = conectarseU($query_rs_usuar);
+//$totalRows_rs_usuar = mysql_num_rows($rs_usuar);
 //echo $query_rs_usuar;
 ?>
 <!DOCTYPE html>

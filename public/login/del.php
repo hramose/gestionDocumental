@@ -35,8 +35,8 @@ if (!function_exists("GetSQLValueString")) {
 if ((isset($_POST['user_id'])) && ($_POST['user_id'] != "")) {
     $deleteSQL = sprintf("DELETE FROM Usuario WHERE Id_Usuario=%s", GetSQLValueString($_POST['user_id'], "int"));
 
-    mysql_select_db($database_cyber, $cyber);
-    $Result1 = mysql_query($deleteSQL, $cyber) or die(mysql_error());
+
+    $Result1 = insertT($deleteSQL);
 
     $deleteGoTo = "list.php";
     if (isset($_SERVER['QUERY_STRING'])) {

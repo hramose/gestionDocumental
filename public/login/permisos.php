@@ -51,8 +51,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
     $log->info(print_r($_POST, true));
 
     $permisos = isset($_POST["permisos"]) ? $_POST["permisos"] : '';
-    mysql_select_db($database_cyber, $cyber);
-    $Result1 = mysql_query(sprintf("delete from tb_permisos where id_usuarios =%s;", GetSQLValueString($_POST['Id_Usuario'], "text")), $cyber) or die(mysql_error());
+    $insertSQL= sprintf("delete from tb_permisos where id_usuarios =%s;", GetSQLValueString($_POST['Id_Usuario'], "text"));
+    $Result1 = insertT($insertSQL);
 	$permisos_get_permisos_count=isset($_POST["permisos_get_permisos"]) ? $_POST["permisos_get_permisos"] : '';
     for ($i = 0; $i < $permisos_get_permisos_count; $i++) {
 		if(isset($permisos[$i])){
@@ -69,7 +69,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 		$log->info($insertSQL);
         //echo  $insertSQL	
 		
-        	$Result1 = mysql_query($insertSQL, $cyber) or die(mysql_error());
+        	$Result1 = insertT($insertSQL);
 		}
     }
     // mysql_select_db($database_cyber, $cyber);
@@ -90,8 +90,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1tecnico")) {
     //print_r($_POST);
     $permisos = isset($_POST["permisos2"]) ? $_POST["permisos2"] : '';
-    mysql_select_db($database_cyber, $cyber);
-    $Result1 = mysql_query(sprintf("delete from tb_soport_departament_suarios where id_usuarios =%s;", GetSQLValueString($_POST['Id_Usuario'], "text")), $cyber) or die(mysql_error());
+    $insertSQL = sprintf("delete from tb_soport_departament_suarios where id_usuarios =%s;", GetSQLValueString($_POST['Id_Usuario'], "text"));
+    $Result1 = insertT($insertSQL);
 	$permisos_get_permisos_tecnico_count=isset($_POST["permisos_get_permisos_tecnico"]) ? $_POST["permisos_get_permisos_tecnico"] : '';
     for ($i = 0; $i < $permisos_get_permisos_tecnico_count; $i++) {
 		if(isset($permisos[$i])){
@@ -104,7 +104,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1tecnico")) {
 )", GetSQLValueString($permisos[$i], "text"), GetSQLValueString(isset($_POST['Id_Usuario']) ? $_POST['Id_Usuario'] : '-7451123', "text")
         );
         //echo  $insertSQL				    ;
-        $Result1 = mysql_query($insertSQL, $cyber) or die(mysql_error());
+        $Result1 = insertT($insertSQL);
 		}
     }
     // mysql_select_db($database_cyber, $cyber);

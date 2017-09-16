@@ -56,7 +56,7 @@ if (isset($_POST['usuario'])) {
     $MM_redirectLoginSuccess = "../index.php";
     $MM_redirectLoginFailed = "../error.php?mensaje=Usuario o Correo incorrecto";
     $MM_redirecttoReferrer = false;
-    mysql_select_db($database_cyber, $cyber);
+
 
     $LoginRS__query = sprintf("  SELECT tb_usuarios.id_usuarios  as user_id,
        tb_usuarios.usuario,
@@ -74,13 +74,13 @@ if (isset($_POST['usuario'])) {
        tb_usuarios.user_nivel
   FROM tb_usuarios tb_usuarios WHERE usuario=%s AND correo_corporativo=%s", GetSQLValueString($loginUsername, "text"), GetSQLValueString($correo, "text"));
 //echo   $LoginRS__query;
-    $LoginRS = mysql_query($LoginRS__query, $cyber) or die(mysql_error());
-    $loginFoundUser = mysql_num_rows($LoginRS);
+
+    $loginFoundUser =conectarseU($LoginRS__query);
     if ($loginFoundUser) {
-        $para = mysql_result($LoginRS, 0, 'correo_corporativo');
-        $nombre_para = mysql_result($LoginRS, 0, 'user_usuario');
-        $usuario = mysql_result($LoginRS, 0, 'usuario');
-        $clave = mysql_result($LoginRS, 0, 'user_pass');
+        $para = $loginFoundUser['correo_corporativo'];
+        $nombre_para = $loginFoundUser['user_usuario'];
+        $usuario = $loginFoundUser['usuario'];
+        $clave = $loginFoundUser['user_pass'];
         header('Refresh: 3; URL=' . $MM_redirectLoginSuccess);
         echo '<h1>';
         envia_correo($para, $nombre_para, $usuario, $clave);

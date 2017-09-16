@@ -55,7 +55,7 @@ class Historial_Controller {
         </table>
 
         <?php
-        
+
     }
 
     function ver_historial_cambio_peticion($id_pedido_usuarios) {

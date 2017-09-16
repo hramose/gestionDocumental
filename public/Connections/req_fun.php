@@ -544,7 +544,7 @@ WHERE (pedidos.id_peticion = %s)', $this->GetSQLValueString($id_peticion, "text"
 
         ?>
         <?php $i=0;
-            foreach ($row_rs_usuarios as $rs_usuarios ) {
+            foreach ($row_rs_usuarios as $row_rs_usuarios ) {
                 $i++;
                 ?>
                 <?php echo $row_rs_usuarios["usuario"]; ?>|
@@ -706,7 +706,7 @@ WHERE (pedidos.id_peticion = %s)', $this->GetSQLValueString($id_peticion, "text"
                 </thead>
                 <tbody>
                 <?php
-                    foreach ($row_rs_usuarios as $rs_usuarios ) {
+                    foreach ($row_rs_usuarios as $row_rs_usuarios ) {
                         ?>
                         <tr>
                             <td><?php echo $row_rs_usuarios["id_peticion"]; ?></td>

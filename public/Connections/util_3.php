@@ -34,7 +34,7 @@ if (!function_exists("GetSQLValueString")) {
 
 
 function get_permisos($select_name, $Id_Usuario, $database_cyber, $cyber) {
-    mysql_select_db($database_cyber, $cyber);
+
     $query_rs_usuarios = " SELECT (select /*top*/ 1 id_usuarios from tb_permisos where id_usuarios ='" . $Id_Usuario . "' and Id_Permiso=Permisos.Id_permisos_generales limit 1) ,
                         Permisos.Id_permisos_generales,
                         Permisos.Opc_Permiso,
@@ -43,14 +43,15 @@ function get_permisos($select_name, $Id_Usuario, $database_cyber, $cyber) {
                         (select /*top 1*/ Id_Permiso from tb_permisos where id_usuarios ='" . $Id_Usuario . "' and Id_Permiso=Permisos.Id_permisos_generales limit 1) AS perm_select
                    FROM tb_permisos_generales Permisos ; ";
     //echo "<pre>$query_rs_usuarios</pre>";
-    $rs_usuarios = mysql_query($query_rs_usuarios, $cyber) or die(mysql_error());
-    $row_rs_usuarios = mysql_fetch_assoc($rs_usuarios);
-    $totalRows_rs_usuarios = mysql_num_rows($rs_usuarios);
+
+    $row_rs_usuarios = conectarseT($query_rs_usuarios)
+
     ?>
 <fieldset data-role="controlgroup">
     <legend>Permisos:</legend>
 
-        <?php $conted3=0; do { ?>
+        <?php $conted3=0;
+        foreach ($row_rs_usuarios as $row_rs_usuarios ) {?>
         <!---------------------------------------------------------------->
         <input name="<?php echo $select_name ?>[<?=$conted3?>]" type="checkbox" id="<?php echo $select_name ?>[<?=$conted3?>]" value="<?php echo $row_rs_usuarios['Id_permisos_generales']; ?>" <?php
             if (isset($row_rs_usuarios['perm_select'])) {
@@ -61,16 +62,17 @@ function get_permisos($select_name, $Id_Usuario, $database_cyber, $cyber) {
         <!---------------------------------------------------------------->
 
 
-    <?php $conted3++; } while ($row_rs_usuarios = mysql_fetch_assoc($rs_usuarios)); ?>
+    <?php $conted3++;
+        }?>
 
     </fieldset>
     <input type="hidden" value="<?php echo $conted3?>" name="permisos_get_permisos" id="permisos_get_permisos" />
 <?php
-    mysql_free_result($rs_usuarios);
+
 }
 
 function get_permisos_tecnico($select_name, $Id_Usuario, $database_cyber, $cyber) {
-    mysql_select_db($database_cyber, $cyber);
+
     $query_rs_usuarios = " SELECT 
 (select /*top 1*/ id_usuarios from tb_soport_departament_suarios 
   where id_usuarios ='" . $Id_Usuario . "' and id_departamneto=tb_departamento.id_departamneto and tb_departamento.deleted_at is null limit 1) ,
@@ -82,16 +84,16 @@ tb_departamento.id_departamneto,
        tb_departamento.estado,
        (select /*top 1*/ id_departamneto from tb_soport_departament_suarios where id_usuarios ='" . $Id_Usuario . "' and id_departamneto=tb_departamento.id_departamneto limit 1) AS perm_select
   FROM  tb_departamento tb_departamento where tb_departamento.deleted_at is null order by tb_departamento.id_estacion; ";
-    //echo "<pre>$query_rs_usuarios</pre>";
-    $rs_usuarios = mysql_query($query_rs_usuarios, $cyber) or die(mysql_error());
-    $row_rs_usuarios = mysql_fetch_assoc($rs_usuarios);
-    $totalRows_rs_usuarios = mysql_num_rows($rs_usuarios);
+
+    $row_rs_usuarios = conectarseT($query_rs_usuarios);
+
     ?>
 
 
     <fieldset data-role="controlgroup">
     <legend>Permisos:</legend>
-        <?php $conted3=0; do { ?>
+        <?php $conted3=0;
+        foreach ($row_rs_usuarios as $row_rs_usuarios ) { ?>
         <!---------------------------------------------------------------->
         <input name="<?php echo $select_name ?>[<?=$conted3?>]" type="checkbox" id="<?php echo $select_name ?>[<?=$conted3?>]" value="<?php echo $row_rs_usuarios['id_departamneto']; ?>" <?php
             if (isset($row_rs_usuarios['perm_select'])) {
@@ -104,12 +106,13 @@ tb_departamento.id_departamneto,
 
 
 
-    <?php $conted3++; } while ($row_rs_usuarios = mysql_fetch_assoc($rs_usuarios)); ?>
+    <?php $conted3++;
+        } ?>
 
 	<input type="hidden" value="<?php echo $conted3?>" name="permisos_get_permisos_tecnico" id="permisos_get_permisos_tecnico" />
     </fieldset>
     <?php
-    mysql_free_result($rs_usuarios);
+
 }
 
 function get_permisos_inicio_secion($Id_Usuario, $database_cyber, $cyber) {

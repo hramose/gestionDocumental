@@ -40,8 +40,8 @@ if (isset($_SERVER['QUERY_STRING'])) {
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
     $insertSQL = sprintf("INSERT INTO Usuario (name, Nom_Usuario, Ape_Usuario, pass, descripcion,Car_Usuario,Mai_Usuario,Tel_Usuario) VALUES (%s, %s, %s, %s, %s ,%s, %s, %s)", GetSQLValueString($_POST['user_usuario'], "text"), GetSQLValueString($_POST['user_nombre'], "text"), GetSQLValueString($_POST['user_apellido'], "text"), GetSQLValueString($_POST['user_pass'], "text"), GetSQLValueString($_POST['user_nivel'], "int"), GetSQLValueString($_POST['Car_Usuario'], "text"), GetSQLValueString($_POST['Mai_Usuario'], "text"), GetSQLValueString($_POST['Tel_Usuario'], "text"));
 
-    mysql_select_db($database_cyber, $cyber);
-    $Result1 = mysql_query($insertSQL, $cyber) or die(mysql_error());
+
+    $Result1 = insertT($insertSQL);
 
     $insertGoTo = "list.php";
     if (isset($_SERVER['QUERY_STRING'])) {
