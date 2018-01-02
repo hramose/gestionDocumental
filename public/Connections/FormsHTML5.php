@@ -18,7 +18,7 @@ class FormsHTML5 {
 	 * @param string $logfilename Path and name of the file log.
 	 * @param string $separator Character used for separate the field values.
 	 */
-	function FormsHTML5() {
+	function __construct() {
 	}
 	
 	/**
