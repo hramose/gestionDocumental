@@ -1,11 +1,11 @@
 <header class="main-header">
     <!-- Logo -->
-    <a href="#" class="logo" title="Sistema de Documentacion Conagopare Pichincha">Doc <b>Conagopare </b></a>
+    <a href="#" class="logo" title="@lang("view_larevel.sistemadedocumentacionconagopare")">@lang("view_larevel.doc") <b>@lang("view_larevel.conagopare") </b></a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top" role="navigation">
         <!-- Sidebar toggle button-->
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-        <span class="sr-only">Sistema de Documentacion Conagopare</span>
+        <span class="sr-only">@lang("view_larevel.sistemadedocumentacionconagopare")</span>
         </a>
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">

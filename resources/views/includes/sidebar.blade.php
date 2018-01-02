@@ -22,7 +22,7 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
       
         <ul class="sidebar-menu">
-            <li class="header">Sistema de Documentación Conagopare Pichincha</li>
+            <li class="header">Help Desk IT</li>
             <li class="active treeview">
                 <a href="{{ url('/') }}">
                 <i class="fa fa-rebel"></i> <span>Dashboard</span>
