@@ -23,13 +23,13 @@ function html_crate($dato) {
     return preg_replace($saltoelinea, '', nl2br(trim($dato)));
 }
 
-$rek = new Req_Controller($database_cyber, $cyber);
+$rek = new Req_Controller();
 $p = $rek->getPEticion(isset($_REQUEST['id_peticion']) ? $_REQUEST['id_peticion'] : '-75');
 $user = new Usuario_Controller($database_cyber, $cyber);
 $Telefonicamente = 23;
 if ((isset($_REQUEST["MM_inserttt"])) && ($_REQUEST["MM_inserttt"] == "formreqLLamadatelefono")) {
     ?>
-    INGRESO aca!!!!;ssssssssssssssssssssss
+    INGRESO aca!!!!;
     <!--<pre>
     <?php //print_r($_REQUEST); ?>
     </pre>-->
@@ -72,9 +72,9 @@ if ((isset($_REQUEST["MM_inserttt"])) && ($_REQUEST["MM_inserttt"] == "formreqLL
         <script>
             fn_mandaCorreo_resuelto('#Usuario_corre_final35',<?php echo html_crate($datodswe21d34) ?>, '<?php echo html_crate($_REQUEST['mail_req']) ?>', '<?php echo html_crate($_REQUEST['nombre']) ?>', '<?php echo html_crate($_REQUEST['nombre']) ?>', '<?php echo html_crate($rek->get_archivos_subidos_select_departamento_txt($Telefonicamente)) ?>', '<?php echo html_crate($_REQUEST['extencion']) ?>', '<?php echo html_crate($_REQUEST['titulo']) ?>', '<?php echo html_crate($_REQUEST['resolution']) ?>');
         </script>
-        <?
+        <?php
         }else {
-        echo "<h1>En Progreso</h1>";
+        echo "<h1>En Progreso...!!!</h1>";
         ?>
         <!------------------------------->
         <div id="Usuario_corre3f"><div class="ui-widget">
@@ -86,8 +86,8 @@ if ((isset($_REQUEST["MM_inserttt"])) && ($_REQUEST["MM_inserttt"] == "formreqLL
             </div></div>
         <?php echo (isset($hecho_DIVmensajesCorreo) ? $hecho_DIVmensajesCorreo : '') ?>
         <script type="text/javascript">
-        <?php echo $hecho_mensajesCorreo ?>
-            fn_mandaCorreo_solamente('#Usuario_corre3f',<?php echo $datodswe2111 ?>, '<?php echo $r['mail_req'] ?>', '<?php echo $r['nombre'] ?>',<?php echo $count ?>);
+        <?php if(isset($hecho_mensajesCorreo)){echo $hecho_mensajesCorreo;}  ?>
+            fn_mandaCorreo_solamente('#Usuario_corre3f',<?php echo $datodswe21d34 ?>, '<?php echo $r['mail_req'] ?>', '<?php echo $r['nombre'] ?>',<?php echo $count = 1 ?>);
         </script>
         <!------------------------------->
         <?php

@@ -6,7 +6,7 @@ require_once('../Connections/req_fun.php');
 require_once('../Connections/user_fun.php');
 require_once('../Connections/cyber.php');
 
-$rek = new Req_Controller($database_cyber, $cyber);
+$rek = new Req_Controller();
 $use = new Usuario_Controller($database_cyber, $cyber);
 ?>
 <!DOCTYPE html>

@@ -8,17 +8,32 @@ $hostname_cyber = $array_database["DataBase"]["hostname_cyber"];
 $database_cyber = $array_database["DataBase"]["database_cyber"];
 $username_cyber = $array_database["DataBase"]["username_cyber"];
 $password_cyber = $array_database["DataBase"]["password_cyber"];
-$cyber = mysqli_connect($hostname_cyber, $username_cyber, $password_cyber) or die("Unable to connect to MySQL");
+
 $cyber = null;
 
 function conectarseU($sql){
-    $pdo = new PDO('mysql:host=localhost;dbname=wcadena_lara1', 'wcadena_lara1', 'wcadena_lara1');
+
+    $array_database = parse_ini_file("../soportem.ini", true);
+
+    $hostname_cyber = $array_database["DataBase"]["hostname_cyber"];
+    $database_cyber = $array_database["DataBase"]["database_cyber"];
+    $username_cyber = $array_database["DataBase"]["username_cyber"];
+    $password_cyber = $array_database["DataBase"]["password_cyber"];
+
+    $pdo = new PDO('mysql:host='.$hostname_cyber.';dbname='.$database_cyber, $username_cyber, $password_cyber);
     $sentencia = $pdo->query($sql);
     $fila = $sentencia->fetch(PDO::FETCH_ASSOC);
     return $fila;
 }
 function conectarseT($sql){
-    $pdo = new PDO('mysql:host=localhost;dbname=wcadena_lara1', 'wcadena_lara1', 'wcadena_lara1');
+    $array_database = parse_ini_file("../soportem.ini", true);
+
+    $hostname_cyber = $array_database["DataBase"]["hostname_cyber"];
+    $database_cyber = $array_database["DataBase"]["database_cyber"];
+    $username_cyber = $array_database["DataBase"]["username_cyber"];
+    $password_cyber = $array_database["DataBase"]["password_cyber"];
+
+    $pdo = new PDO('mysql:host='.$hostname_cyber.';dbname='.$database_cyber, $username_cyber, $password_cyber);
     $sentencia = $pdo->query($sql);
     $fila = $sentencia->fetchAll();
     return $fila;
@@ -29,7 +44,15 @@ function conT($sql){
 
 function insertT($sql){
     try {
-        $conn = new PDO('mysql:host=localhost;dbname=wcadena_lara1', 'wcadena_lara1', 'wcadena_lara1');
+        $array_database = parse_ini_file("../soportem.ini", true);
+
+        $hostname_cyber = $array_database["DataBase"]["hostname_cyber"];
+        $database_cyber = $array_database["DataBase"]["database_cyber"];
+        $username_cyber = $array_database["DataBase"]["username_cyber"];
+        $password_cyber = $array_database["DataBase"]["password_cyber"];
+
+        $conn = new PDO('mysql:host='.$hostname_cyber.';dbname='.$database_cyber, $username_cyber, $password_cyber);
+
         // set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         /*$sql = "INSERT INTO MyGuests (firstname, lastname, email)

@@ -14,7 +14,7 @@ function html_crate($dato) {
     return preg_replace($saltoelinea, '', nl2br(trim($dato)));
 }
 
-$rek = new Req_Controller($database_cyber, $cyber);
+$rek = new Req_Controller();
 $p = $rek->getPEticion(isset($_REQUEST['id_peticion']) ? $_REQUEST['id_peticion'] : '-1');
 $user = new Usuario_Controller($database_cyber, $cyber);
 

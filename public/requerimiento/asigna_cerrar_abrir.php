@@ -5,7 +5,7 @@ if (!isset($_SESSION)) {
 require_once('../Connections/req_fun.php');
 require_once('../Connections/user_fun.php');
 require_once('../Connections/cyber.php');
-$rek = new Req_Controller($database_cyber, $cyber);
+$rek = new Req_Controller();
 $id_peticion=isset($_REQUEST['id_peticion']) ? $_REQUEST['id_peticion'] : '-1';
 $id_usuarios=isset($_REQUEST["id_usuarios"]) ? $_REQUEST["id_usuarios"] : '-1';
 $estado=isset($_REQUEST["estado"]) ? $_REQUEST["estado"] : '-1';

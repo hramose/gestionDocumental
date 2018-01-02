@@ -5,7 +5,7 @@ class Req_Controller {
     public $data;
     private $database_cyber, $cyber;
 
-    function __construct($database_cyber, $cyber) {
+    function __construct($database_cyber = "", $cyber = "") {
         $this->database_cyber = $database_cyber;
         $this->cyber = $cyber;
         $this->setTraduccion();
@@ -469,11 +469,11 @@ tb_usuarios.nombre,
 
         foreach ($row_rs_usuarios as $rs_usuarios ) {
             $array["responsables"][] = array(
-                "id_usuarios" => $row_rs_usuarios["id_usuarios"],
-                "nombre" => $row_rs_usuarios["nombre"],
-                "apellido" => $row_rs_usuarios["apellido"],
-                "correo_corporativo" => $row_rs_usuarios["correo_corporativo"],
-                "usuario" => $row_rs_usuarios["usuario"]
+                "id_usuarios" => $rs_usuarios["id_usuarios"],
+                "nombre" => $rs_usuarios["nombre"],
+                "apellido" => $rs_usuarios["apellido"],
+                "correo_corporativo" => $rs_usuarios["correo_corporativo"],
+                "usuario" => $rs_usuarios["usuario"]
             );
         }
 
@@ -880,9 +880,9 @@ WHERE (pedidos.id_peticion = %s)', $this->GetSQLValueString($id_peticion, "text"
         //echo $query_rs_usuarios;
 
         $row_rs_usuarios = conT($query_rs_usuarios);
-
+        $optiongroup = "";
         foreach ($row_rs_usuarios as $rs_usuarios ) {
-            $optiongroup = $row_rs_usuarios['estacion'] . '-' . $row_rs_usuarios['descripcion'];
+            $optiongroup = $rs_usuarios['estacion'] . '-' . $rs_usuarios['descripcion'];
         }
 
         return $optiongroup;
@@ -944,20 +944,20 @@ WHERE (pedidos.id_peticion = %s)', $this->GetSQLValueString($id_peticion, "text"
             <?php $count = 0; ?>
             <?php foreach ($row_rs_usuarios as $rs_usuarios ) {?>
                 <?php
-                $optiongroup = $row_rs_usuarios['estacion'];
+                $optiongroup = $rs_usuarios['estacion'];
                 if ($optiongroup != $optiongroupaux) {
                     if (($count++) != 0) {
                         echo "</OPTGROUP>";
                     }
-                    echo "<OPTGROUP label='" . $row_rs_usuarios['estacion'] . "'>";
-                    $optiongroupaux = $this->codificarHTML($row_rs_usuarios['estacion']);
+                    echo "<OPTGROUP label='" . $rs_usuarios['estacion'] . "'>";
+                    $optiongroupaux = $this->codificarHTML($rs_usuarios['estacion']);
                 }
                 ?>
-                <?php if ($row_rs_usuarios['id_departamneto'] != '') { ?><option value="<?php echo $row_rs_usuarios['id_departamneto']; ?>" <?php
-                    if (!(strcmp($row_rs_usuarios['id_departamneto'], "$id_departamento"))) {
+                <?php if ($rs_usuarios['id_departamneto'] != '') { ?><option value="<?php echo $rs_usuarios['id_departamneto']; ?>" <?php
+                    if (!(strcmp($rs_usuarios['id_departamneto'], "$id_departamento"))) {
                         echo "selected=\"selected\"";
                     }
-                    ?> ><?php echo $this->codificarHTML($row_rs_usuarios['estacion']); ?> - <?php echo $this->codificarHTML($row_rs_usuarios['descripcion']); ?></option><?php } ?>
+                    ?> ><?php echo $this->codificarHTML($rs_usuarios['estacion']); ?> - <?php echo $this->codificarHTML($rs_usuarios['descripcion']); ?></option><?php } ?>
             <?php }  ?>
             <?php
             if (($count) != 0) {

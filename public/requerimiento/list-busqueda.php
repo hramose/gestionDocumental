@@ -6,7 +6,7 @@ require_once('../Connections/req_fun.php');
 require_once('../Connections/cyber.php');
 require_once('../Connections/util_3.php');
 
-$rek = new Req_Controller($database_cyber, $cyber);
+$rek = new Req_Controller();
 $campo = $_REQUEST['campo'];
 $busqueda_parametro = $_REQUEST['busqueda_parametro'];
 ?>

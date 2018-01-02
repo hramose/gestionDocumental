@@ -7,7 +7,7 @@ require_once('../Connections/cyber.php');
 require_once('../Connections/envia_correo.php');
 require_once('../Connections/MyLogPHP.php');
 $log = new MyLogPHP();
-$rek = new Req_Controller($database_cyber, $cyber);
+$rek = new Req_Controller();
 $datodswe2111 = $rek->set_requerimiento($_POST['nombre'], $_POST['id_departamento'], $_POST['titulo'], $_POST['problema'], $_POST['extencion'], $_POST['celular'], $_POST['mail_req'], $_POST['Prioridad'], $_POST['ip_1'], $_POST['ip_2'], $_POST['uniq']);
 $_SESSION['id_peticion'] = $datodswe2111;
 
@@ -71,7 +71,8 @@ for ($i = 0; $i < $count; $i++) {
         progresitto234 = progresitto234 + 1;
     }
 </script>
-<h3>Progreso de envio <span id="progressbar2w34">0%</span></h3>
+<h3>
+    Progreso de envio <span id="progressbar2w34">0%</span></h3>
 <a class="btn btn-primary" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
   Ver Detalle de envío
 </a>

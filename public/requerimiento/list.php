@@ -6,7 +6,7 @@ if (!isset($_SESSION)) {
 require_once('../Connections/req_fun.php'); 
  require_once('../Connections/cyber.php'); 
   require_once('../Connections/util_3.php'); 
-$rek = new Req_Controller($database_cyber, $cyber);
+$rek = new Req_Controller();
 ?>
 <!DOCTYPE html>
 <html>
