@@ -34,7 +34,7 @@ function envia_correo_final($id_peticion, $para, $nombre_para, $usuario_d, $esta
     $body = $html;
     //$body = preg_replace("[\]", '', $body);
     $mail->CharSet = 'utf-8';
-    $mail->IsSMTP();
+    //$mail->IsSMTP();
     $mail->SMTPAuth = true;                  // enable SMTP authentication
 //$mail->SMTPSecure = "ssl";                 // sets the prefix to the servier
      $array_correo = parse_ini_file("../soportem.ini", true);

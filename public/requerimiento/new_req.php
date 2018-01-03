@@ -24,6 +24,7 @@ $actores_REk = $rek->dartecnicoAsignado_departamento($r['id_departamento']);
 echo "<br />";
 //echo '<pre>'.print_r($actores_REk,true).'</pre>';	
 //echo '<pre>'.print_r($r,true).'</pre>';
+
 $rek->setUsuario_o_tecnico_en_REQ($r['id_peticion'], $_SESSION['MM_IDUsername'], "SOLIC");
 $count = count($actores_REk['responsables']);
 $_SESSION['tecnico_corr'] = "";

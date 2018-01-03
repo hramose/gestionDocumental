@@ -25,7 +25,7 @@ $html=ob_get_clean();
 $body= $html;
     //$body = eregi_replace("[\]", '', $body);
     $mail->CharSet = 'utf-8';
-    $mail->IsSMTP();
+    //$mail->IsSMTP();
     $mail->SMTPAuth = true;                  // enable SMTP authentication
 //$mail->SMTPSecure = "ssl";                 // sets the prefix to the servier
     $mail->Host = $array_correo["correo"]["Host"];      // sets GMAIL as the SMTP server
